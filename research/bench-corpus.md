@@ -137,7 +137,9 @@ post-mortems and were skipped here.
 
 ### 1. Euler Finance — 2023-03-13
 - **Chain / contract / tx**: Ethereum mainnet. `donateToReserves` on EToken
-  impl `0x...` [verify]. Initiating tx `0xc310a0a...` [verify].
+  impl `0x...` [verify]. Initiating tx
+  `0xc310a0affe2169d1f6feec1c63dbc7f7c62a887fa48795d327d4d2da2d6b111d`
+  (DAI pool drain).
 - **$ lost (USD)**: ~$197M across DAI, WBTC, stETH, USDC pools.
 - **Bug class**: donation-accounting + liquidation-math.
 - **Root cause**: `donateToReserves` reduced the donor's balance but did not
@@ -154,7 +156,7 @@ post-mortems and were skipped here.
 
 ### 2. Beanstalk — 2022-04-17
 - **Chain / contract / tx**: Ethereum mainnet. Beanstalk diamond
-  `0xC1E088fC1323b20BCBee9bd1B9fC9546db5624C5` [verify].
+  `0xC1E088fC1323b20BCBee9bd1B9fC9546db5624C5`.
 - **$ lost (USD)**: ~$182M (BEAN, LP).
 - **Bug class**: governance-flash-vote.
 - **Root cause**: Governance proposals could `delegatecall` from the diamond
@@ -172,7 +174,7 @@ post-mortems and were skipped here.
 
 ### 3. Cream Finance (AMP) — 2021-08-30
 - **Chain / contract / tx**: Ethereum mainnet. CrAMP market on Cream v1.
-  Exploit tx `0x0fe2542...` [verify].
+  Exploit tx `0x0fe2542079644e107cbf13690eb9c2c65963ccb79089ff96bfaf8dced2331c92`.
 - **$ lost (USD)**: ~$18.8M.
 - **Bug class**: cross-function-reentrancy via ERC-777 `tokensReceived`
   hook on AMP.
@@ -188,8 +190,13 @@ post-mortems and were skipped here.
 
 ### 4. Nomad Bridge — 2022-08-01
 - **Chain / contract / tx**: Ethereum / Moonbeam Replica
-  `0xB92336759618F55bd0F8313bd843604592E27bd8` [verify]. Initial tx
-  `0xa5fe92...` [verify], then dozens of copycats.
+  `0xB92336759618F55bd0F8313bd843604592E27bd8`. Block 15259101 contained
+  4 relevant exploit txs at indices 0, 1, 3, 124. Cited "first" txs vary
+  by source: Immunefi cites
+  `0xa5fe9d044e4f3e5aa5bc4c0709333cd2190cba0f4e7f16bcf73f49f83e4a5460`
+  (100 WBTC drain); Coinbase analysis cites
+  `0x61497a1a8a8659a06358e130ea590e1eed8956edbd99dbb2048cfb46850a8f17`
+  (also 100 WBTC). 300+ copycat txs followed.
 - **$ lost (USD)**: ~$190M.
 - **Bug class**: merkle-init-zero.
 - **Root cause**: After an upgrade, the trusted-root mapping was
@@ -209,8 +216,8 @@ post-mortems and were skipped here.
 
 ### 5. Wormhole — 2022-02-02
 - **Chain / contract / tx**: Solana side. Wormhole core program
-  `worm2ZoG2kUd4vFXhvjh93UUH596ayRfgQ2MgjNMTth` [verify]. Exploit tx
-  `2zCXpxM...` [verify].
+  `worm2ZoG2kUd4vFXhvjh93UUH596ayRfgQ2MgjNMTth`. Exploit tx
+  `25Zu1L2Q9uk998d5GMnX43t9u9eVBKvbVtgHndkc2GmUFed8Pu73LGW6hiDsmGXHykKUTLkvUdh4yXPdL3Jo4wVS`.
 - **$ lost (USD)**: ~$326M (120k wETH equivalent).
 - **Bug class**: signature-verification.
 - **Root cause**: `verify_signatures` did not pin the Instructions sysvar
@@ -228,9 +235,10 @@ post-mortems and were skipped here.
   thread.
 
 ### 6. Ronin Bridge — 2022-03-23
-- **Chain / contract / tx**: Ronin sidechain bridge. Validator-set
-  `0x...` [verify]. Two outbound txs drained ~173,600 ETH and 25.5M USDC
-  [verify].
+- **Chain / contract / tx**: Ethereum-side Axie Infinity Ronin Bridge
+  `0x1A2a1c938CE3eC39b6D47113c7955bAa9DD454F2`. Two outbound txs drained
+  173,600 ETH and 25.5M USDC. Drainer EOA
+  `0x098B716B8Aaf21512996dC57EB0615e2383E2f96` (OFAC-sanctioned, Lazarus).
 - **$ lost (USD)**: ~$624M.
 - **Bug class**: access-control / signer-set capture.
 - **Root cause**: 5-of-9 validator quorum. Attacker compromised 4 Sky
@@ -249,8 +257,8 @@ post-mortems and were skipped here.
 
 ### 7. Mango Markets — 2022-10-11
 - **Chain / contract / tx**: Solana. Mango v3 program
-  `mv3ekLzLbnVPNxjSKvqBpU3ZeZXPQdEC3bp5MDEBG68` [verify]. Two main txs by
-  attacker Avraham Eisenberg.
+  `mv3ekLzLbnVPNxjSKvqBpU3ZeZXPQdEC3bp5MDEBG68`. Two main txs by attacker
+  Avraham Eisenberg.
 - **$ lost (USD)**: ~$117M.
 - **Bug class**: flash-loan-oracle-manip (perps mark-price).
 - **Root cause**: Mango's perps used a TWAP-ish mark from spot books and
@@ -283,8 +291,9 @@ post-mortems and were skipped here.
   thread.
 
 ### 9. Cashio — 2022-03-23
-- **Chain / contract / tx**: Solana. Cashio program `CASH3M4t6KBzFbB...`
-  [verify].
+- **Chain / contract / tx**: Solana. Cashio Brrr program (mint/burn)
+  `BRRRot6ig147TBU6EGp7TMesmQrwu729CbG6qu2ZUHWm`; Bankman program
+  (collateral allowlist) `BANKhiCgEYd7QmcWwPLkqvTuuLN6qEwXDZgTe6HEbwv1`.
 - **$ lost (USD)**: ~$48M (largely returned for accounts under $100k).
 - **Bug class**: incomplete-validation across an account chain.
 - **Root cause**: To mint CASH against Saber LP collateral, the program
@@ -339,7 +348,8 @@ post-mortems and were skipped here.
 ### 12. Multichain — 2023-07-06
 - **Chain / contract / tx**: Multi-EVM. Outflows from MPC-controlled
   routers on Fantom, Moonriver, Dogechain, etc.
-- **$ lost (USD)**: ~$126M [verify; range $100M–$130M].
+- **$ lost (USD)**: ~$126M (~$120M from Fantom bridge alone; WBTC
+  $30.9M, WETH $13.6M, USDC $57M).
 - **Bug class**: access-control / key compromise.
 - **Root cause**: Multichain's MPC validator key shards were not actually
   distributed — the (then-detained) CEO controlled them. The keys were
@@ -354,8 +364,9 @@ post-mortems and were skipped here.
   Chainalysis "Multichain Bridge".
 
 ### 13. SushiSwap RouteProcessor2 — 2023-04-09
-- **Chain / contract / tx**: Multi-EVM. RouteProcessor2 per chain at
-  `0x...` [verify].
+- **Chain / contract / tx**: Multi-EVM (deployed on 14 chains incl.
+  Ethereum, Arbitrum, Optimism, Polygon, BSC, Avalanche). RouteProcessor2
+  on Ethereum `0x044b75f554b886a065b9567891e45c79542d7357`.
 - **$ lost (USD)**: ~$3.3M (largely white-hat returned).
 - **Bug class**: approve-allowance (router).
 - **Root cause**: Inside `processRoute` the router did
@@ -371,7 +382,9 @@ post-mortems and were skipped here.
 
 ### 14. KyberSwap Elastic — 2023-11-22
 - **Chain / contract / tx**: Multi-EVM (Ethereum, Arbitrum, Optimism,
-  Polygon, BSC, Avalanche, Base). Elastic pools at `0x...` [verify].
+  Polygon, BSC, Avalanche, Base). Elastic Factory (cross-chain canonical)
+  `0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A`; affected pools were
+  multiple per chain.
 - **$ lost (USD)**: ~$48M.
 - **Bug class**: pool-init-arithmetic / tick precision.
 - **Root cause**: Elastic's reinvestment-curve and tick-update logic
@@ -408,7 +421,8 @@ post-mortems and were skipped here.
 
 ### 16. Poly Network — 2021-08-10
 - **Chain / contract / tx**: Multi-EVM (Ethereum, BSC, Polygon).
-  EthCrossChainManager / EthCrossChainData at `0x...` [verify].
+  EthCrossChainManager on Ethereum
+  `0x838bf9E95CB12Dd76a54C9f9D2E3082EAF928270`.
 - **$ lost (USD)**: ~$611M (largely white-hat returned over days).
 - **Bug class**: access-control / keeper override.
 - **Root cause**: `verifyHeaderAndExecuteTx` let any caller invoke
@@ -524,9 +538,10 @@ post-mortems and were skipped here.
 - **Post-mortem**: OptiFi "OptiFi Mainnet Closure" Medium.
 
 ### 23. Slope Wallet — 2022-08-02
-- **Chain / contract / tx**: Solana frontend. No on-chain bug. ~9k Solana
+- **Chain / contract / tx**: Solana frontend. No on-chain bug. ~9,231 Solana
   wallets imported into Slope's mobile app drained.
-- **$ lost (USD)**: ~$4.5M [verify].
+- **$ lost (USD)**: ~$4.1M (Solana Foundation post-mortem); some early
+  reports as high as $6–8M.
 - **Bug class**: keypair-leak-frontend.
 - **Root cause**: Slope's mobile build sent unscrubbed app state to
   Sentry, including the imported mnemonic in clear text. Sentry servers
@@ -560,10 +575,14 @@ post-mortems and were skipped here.
 - **Post-mortem**: Sentiment "Post Mortem on April 4 Exploit"; Balancer
   "Read-only Reentrancy"; ChainSecurity write-up.
 
-### 25. bZx (iToken duplicate-transfer) — 2021-09-13
+### 25. bZx (iToken duplicate-transfer) — 2020-09-14 [date corrected:
+sources confirm the iToken duplicate-transfer event was September 14,
+2020, not 2021-09-13; the November 2021 bZx event was a separate
+phishing/key-compromise — kept distinct]
 - **Chain / contract / tx**: Ethereum mainnet. bZx iToken `0x...`
-  [verify].
-- **$ lost (USD)**: ~$55M [verify; range $48–55M].
+  [verify — multiple iToken impls (iETH, iLINK, iDAI, iUSDT, iUSDC)].
+- **$ lost (USD)**: ~$8.1M (iToken duplicate-transfer; the often-cited
+  ~$55M figure refers to the separate Nov-2021 phishing event).
 - **Bug class**: token-logic flaw (duplicate-transfer).
 - **Root cause**: `transferFrom(self, self, amt)` doubled the caller's
   balance — implementation decreased `from`'s balance and increased
@@ -595,7 +614,8 @@ post-mortems and were skipped here.
   and Lendf.Me Hacks".
 
 ### 27. Visor Finance — 2021-12-21
-- **Chain / contract / tx**: Ethereum mainnet. `RewardsHypervisor`.
+- **Chain / contract / tx**: Ethereum mainnet. `RewardsHypervisor` at
+  `0xc9f27a50f82571c1c8423a42970613b8dbda14ef`.
 - **$ lost (USD)**: ~$8.2M.
 - **Bug class**: access-control / missing modifier.
 - **Root cause**: `deposit` was supposed to be invoked through a trusted
@@ -610,8 +630,8 @@ post-mortems and were skipped here.
 - **Post-mortem**: Visor Finance "VISR Exploit"; Rekt News "Visor".
 
 ### 28. Qubit Finance (QBridge) — 2022-01-27
-- **Chain / contract / tx**: BSC (Qubit) ↔ Ethereum locking. QBridge
-  `0x...` [verify].
+- **Chain / contract / tx**: BSC (Qubit) ↔ Ethereum locking. QBridge on
+  Ethereum `0x99309d2e7265528dc7c3067004cc4a90d37b7cc3`.
 - **$ lost (USD)**: ~$80M.
 - **Bug class**: bridge-message-replay / zero-deposit.
 - **Root cause**: Ethereum `deposit` path lacked a non-zero token-

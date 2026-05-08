@@ -499,20 +499,153 @@ Pass bar: 4/10 root causes, <30% false positives, <$5/audit. If yes, architectur
 
 ---
 
-## 17. Open Questions / Decisions to Lock
+## 17. Locked Decisions (v1 commitments)
 
-Before spec-writing:
+This section was previously "open questions"; decisions are now locked as of 2026-05-08 after the design pass + research integration. Each decision references the artifact that backs it. Items still open are at the bottom under §17.X.
 
-- [ ] **Differentiation commitments** — all five axes in v1, or three with two deferred? "All fronts" was the user call; need to confirm scope of "v1" vs "v2."
-- [ ] **Non-EVM VM target for v1 stress test** — SVM or Move? (Pick by underserved × TVL.)
-- [ ] **Hosted LLM vs self-hosted as default** — affects infra spend and client trust tier.
-- [ ] **Heuristic library: open-source baseline, closed production?** — Cecuro's playbook. Adopt or differentiate?
-- [ ] **Off-chain perimeter: built-in or via HexStrike adapter?** — buy-vs-build for the recon tools.
-- [ ] **Continuous monitoring trigger policy** — bytecode-equivalence default, or storage-layout-changed, or external-call-graph-changed?
-- [ ] **Finding identity canonicalization function** — exact hash inputs to lock dedup behavior across re-audits.
-- [ ] **Validation tier ladder** — exact list of rungs. (Draft above is 7 rungs; needs review.)
-- [ ] **Plugin signing / trust model** — third-party tool plugins: how do you trust them? Sandboxing policy.
-- [ ] **Multi-tenant isolation level** — process-level, container-level, VM-level for hostile-input handling.
+### 17.1 Differentiation commitments — v1 vs v2
+
+**LOCKED.** v1 ships **three axes**, v2 adds **two more**:
+
+**v1 (months 0–9):**
+- **EVM** front (head-on with Cecuro on a coverage-and-reproducibility footing, not benchmark-headline)
+- **SVM** front (genuine first-mover on auto-PoC for Solana)
+- **Off-chain perimeter** (frontend XSS, RPC, CI keys, multisig OSINT, bridge validator backends, supply chain)
+
+**v2 (months 9–18):**
+- **Continuous monitoring** (re-audit on commit; bytecode-equivalence trigger)
+- **Move** (Aptos / Sui)
+
+Out of v1 scope (deferred): Cairo, invariant-fuzz-as-default, R10 formal-proof rung depth.
+
+Backed by: [`research/competitor-matrix.md`](research/competitor-matrix.md) (white-space analysis), [`design/multi-vm-svm-sketch.md`](design/multi-vm-svm-sketch.md), [`ops/business-model.md`](ops/business-model.md).
+
+### 17.2 Non-EVM v1 priority
+
+**LOCKED: SVM (Solana).**
+
+Reasons:
+- Largest non-EVM TVL with public-exploit volume (Cashio, Wormhole-Solana, Mango, Crema, OptiFi)
+- No auto-PoC competitor exists today (Sec3, OtterSec, Neodyme are commercial, manual-led, no auto-PoC)
+- Anchor-test framework provides a clean per-rung implementor for R3 fork-state-asserted
+- Schema stress test 3 confirms the spine handles SVM without modification
+- Move is roadmap, not initial — Aptos+Sui combined TVL is meaningful but smaller and the Move audit market is more nascent
+
+Backed by: [`design/multi-vm-svm-sketch.md`](design/multi-vm-svm-sketch.md).
+
+### 17.3 Hosted LLM vs self-hosted as default
+
+**LOCKED: tiered default.**
+
+- **Default tier (paid audits, all self-serve, most enterprise):** Anthropic Claude with no-retention enterprise contract. Supplemented by OpenAI for specific agent roles where they're stronger. No training on inputs.
+- **High-trust tier (pre-launch / IP-sensitive enterprise audits):** self-hosted vLLM with open-weights model (Llama 4, Mistral, DeepSeek). Performance trade-off documented; client signs off on capability difference.
+- **Trust-tier dimension is part of the model router** from day one; every finding records which tier was used.
+
+Backed by: [`ops/legal-framing.md`](ops/legal-framing.md) §Risk 5.
+
+### 17.4 Heuristic library — open-source baseline, closed production
+
+**LOCKED: hybrid posture.**
+
+- **Open-source baseline** (~500 seed heuristics from public exploits + the bug taxonomy). Published under permissive license. Drives community adoption, recruiting funnel, and credibility (researchers can reproduce and extend).
+- **Closed production library** is the curated, FP-tuned, observation-updated production version. Per-tenant private heuristics layered on top.
+- **Three-pool model** (per `design/heuristic-schema.md`): Public → Shared (with sanitization on Private→Shared promotion) → Private (per-tenant).
+
+Backed by: [`design/heuristic-schema.md`](design/heuristic-schema.md), [`ops/business-model.md`](ops/business-model.md) §Layer 1.
+
+### 17.5 Off-chain perimeter — built-in for v1
+
+**LOCKED: built-in.** Silica owns the off-chain agent stack in v1. HexStrike-style adapter is **v2 fallback** for users wanting deeper non-crypto-specific recon.
+
+Reason: the 8 surfaces in `ops/perimeter-playbook.md` need crypto-specific knowledge (multisig OSINT, signer-graph mapping, wallet-call taint analysis, deployer-key derivation) that HexStrike doesn't have. Owning the stack lets us iterate on Solidity-frontend-specific heuristics that bolt-on adapters can't.
+
+Tooling: lift the MCP-as-tool-shim pattern from HexStrike (architectural inspiration) but write our own tool inventory.
+
+Backed by: [`ops/perimeter-playbook.md`](ops/perimeter-playbook.md).
+
+### 17.6 Continuous-monitoring trigger policy
+
+**LOCKED: triple-gate trigger** (default OFF for v1, ON for v2):
+
+A material change that triggers re-audit is any of:
+1. **Bytecode-equivalence-with-prior-audit fails** — recompiled output diverges from the audit baseline.
+2. **Storage-layout changed** — slot mappings differ from the prior audit (catches upgrade-introduced layout collisions).
+3. **External-call-graph changed** — the set of external addresses called or delegate-called from any function expanded or changed targets.
+
+Any one of the three triggers a re-audit at the cheap path (R0–R3); critical-class findings escalate to R4–R5.
+
+Findings dedup via `canonical_id` against the prior audit's findings. Same `canonical_id` → don't re-alert.
+
+Backed by: [`design/schema-draft-v0.md`](design/schema-draft-v0.md) §Canonicalization.
+
+### 17.7 Finding identity canonicalization function
+
+**LOCKED:**
+
+```
+canonical_id = sha256(
+  rfc8785_canonicalize(canonical_subject_locator) || 0x1f
+  || taxonomy_id || 0x1f
+  || rfc8785_canonicalize(canonical_invariant_violated)
+)
+```
+
+- **`canonical_subject_locator`** is the per-VM canonical form: for EVM, `(chain_id, address, bytecode_hash, impl_resolution_strategy)` — `bytecode_hash` rather than `time_anchor` so that "same bug on same code" matches across re-audits at different blocks. For SVM, `(cluster, program_id, program_hash)`.
+- **`taxonomy_id`** is the bug-class identifier from `bug-taxonomy.md`.
+- **`canonical_invariant_violated`** is a structured spec of the violated property; the harness defines a per-class canonicalizer.
+- **0x1f (ASCII Unit Separator)** prevents field-boundary collision attacks.
+- **RFC 8785** (JSON Canonicalization Scheme) ensures stable serialization.
+
+Backed by: [`design/schema-draft-v0.md`](design/schema-draft-v0.md) D-04.
+
+### 17.8 Validation tier ladder rung enumeration
+
+**LOCKED at v0 with 11 rungs + R-INFO.** Confidence ceilings, per-VM implementor mappings, and per-class typical highest_applicable values published in [`design/validation-tiers.md`](design/validation-tiers.md). Empirical recalibration of ceilings reserved for v1 after the first 100 audits.
+
+### 17.9 Plugin signing / trust model
+
+**LOCKED:**
+
+- **Tool plugins:** signed by Silica or a known-publisher list. Three trust tiers: `core` (Silica-maintained), `verified` (third-party with code review + signature), `community` (sandboxed, FP-rate-monitored, requires explicit per-tenant opt-in).
+- **Agent plugins:** same three tiers; community-tier agents only run in tenant sandbox.
+- **VM plugins:** core-tier only at v1 (we maintain EVM, SVM ourselves; community Move/Cairo plugins are v2).
+- **Sandbox policy:** all plugin code runs in container-level isolation per `ops/legal-framing.md`. Network egress restricted by tier (core/verified can hit RPC; community is offline-only by default).
+- **Promotion criteria:** community → verified after 90 days, FP rate <0.1, no security incidents.
+
+Backed by: [`ops/legal-framing.md`](ops/legal-framing.md), [`ops/perimeter-playbook.md`](ops/perimeter-playbook.md).
+
+### 17.10 Multi-tenant isolation level
+
+**LOCKED: container-level for tool execution; process-level for orchestration.**
+
+- **Tool execution** (Slither, Foundry, Mythril, anchor-test, Echidna, etc.): each invocation in its own Docker container with cgroups CPU/memory limits, read-only filesystem except scratch, network egress restricted to allow-listed RPC endpoints. This is the hostile-input boundary.
+- **Orchestration / agent runtime:** process-level isolation per tenant; rate-limited memory; CPU sharing OK with quotas. Cooperative tenant code runs in the same orchestration process pool.
+- **VM-level isolation:** out of scope for v1; reserved for hostile-tenant scenarios at scale.
+
+Backed by: [`ops/legal-framing.md`](ops/legal-framing.md) §Risk 7 + §Risk 10.
+
+### 17.11 Schema migration v0 → v0.1
+
+**LOCKED (added 2026-05-08 from `design/schema-stressors-v0.md` stressor 7):**
+
+- Add `"off-chain"` to `Subject.kind` enum
+- Define off-chain Locator variant with `off_chain_kind` discriminator (`frontend | rpc-endpoint | ci-pipeline | multisig-osint | supply-chain | bridge-validator-api | community-admin`)
+- Off-chain Locators use `time_anchor: { kind: "wall_clock", value: ISO8601 }`
+- `scope_artifact_id` is mandatory when `kind == "off-chain"`
+- v0.1 is backward-compatible with v0 for on-chain findings
+
+Backed by: [`design/schema-stressors-v0.md`](design/schema-stressors-v0.md) Stressor 7.
+
+### 17.X Still open (deferred to v1 spec writing)
+
+- **Per-rung confidence ceiling values** — empirical recalibration after 100+ audits (locked at heuristic priors for v0).
+- **Heuristic correlation discount factors** — per-pair vs global learned model.
+- **Heuristic auto-promotion thresholds** — N observations + FP rate threshold for Proposed→Active.
+- **Cross-tenant heuristic sanitization automation** — manual review at v0; automated at v1.
+- **Marketplace integration** (Sherlock / Code4rena / Cantina) — partner vs compete decision.
+- **Bug-bounty share program** — Immunefi integration.
+- **Insurance partnership** — Nexus Mutual / Sherlock Shield bundle.
+- **Foundation grant partnerships** — Ethereum, Solana, Aptos, Sui foundations.
 
 ---
 

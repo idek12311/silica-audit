@@ -11,7 +11,8 @@ This repo currently holds **design documentation only**. No production code. The
 | Area | Status | Path |
 |---|---|---|
 | Information pool / design dialogue | living | [`notes.md`](notes.md) |
-| Finding schema draft | round-tripped against 3 stressors | [`design/schema-draft-v0.md`](design/schema-draft-v0.md) |
+| Finding schema draft | round-tripped against 8 stressors (1 gap → v0.1 migration locked) | [`design/schema-draft-v0.md`](design/schema-draft-v0.md) |
+| Schema additional stressors | 5 more cases; BadgerDAO exposed off-chain gap | [`design/schema-stressors-v0.md`](design/schema-stressors-v0.md) |
 | Validation tier ladder | 11 rungs enumerated | [`design/validation-tiers.md`](design/validation-tiers.md) |
 | Heuristic library schema | drafted | [`design/heuristic-schema.md`](design/heuristic-schema.md) |
 | Multi-VM stress test (SVM) | passed | [`design/multi-vm-svm-sketch.md`](design/multi-vm-svm-sketch.md) |
@@ -69,16 +70,22 @@ Substrate-first investment lets all five compound. See `notes.md` §7–9.
 - Hostile-input-by-default. Audit input is treated as adversarial; LLM prompt-injection defense is architectural, not a prompt trick.
 - Benchmark from day one. Every prompt / agent / model change gates on the bench corpus.
 
-## What's missing (still)
+## v1 commitments (locked)
 
-Documents tracked in `notes.md` §17 as open decisions to lock before spec writing:
-- Differentiation commitments for v1 vs v2
-- Hosted LLM vs self-hosted as default
-- Heuristic library: open-source baseline, closed production?
-- Off-chain perimeter built-in vs HexStrike adapter
-- Continuous monitoring trigger policy
-- Plugin signing / trust model
-- Multi-tenant isolation level
+Per `notes.md` §17:
+
+- **v1 fronts:** EVM + SVM + off-chain perimeter (3 axes). v2 adds continuous monitoring + Move.
+- **Non-EVM priority:** SVM. Move is v2.
+- **LLM tier:** Anthropic no-retention as default; self-hosted vLLM for IP-sensitive engagements.
+- **Heuristic library:** open-source baseline (~500 seed heuristics) + curated closed production library + per-tenant private pool.
+- **Off-chain perimeter:** built-in for v1; HexStrike adapter as v2 fallback.
+- **Continuous monitoring trigger:** triple-gate (bytecode-equivalence-fails OR storage-layout-changed OR external-call-graph-changed). v2 feature.
+- **Canonicalization:** `sha256(rfc8785(subject_locator) || 0x1f || taxonomy_id || 0x1f || rfc8785(invariant_violated))`.
+- **Plugin trust:** core / verified / community tiers; sandboxed execution per tier.
+- **Multi-tenancy:** container-level for tool execution; process-level for orchestration.
+- **Schema v0 → v0.1:** off-chain subject support added (motivated by BadgerDAO stressor).
+
+Items still genuinely open are listed in `notes.md` §17.X.
 
 ## Read order for someone joining the project
 
