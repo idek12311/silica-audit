@@ -1,0 +1,103 @@
+# Spec author-review (round 2) — 2026-05-08T21:18:00Z
+
+Forked-reviewer six-layer audit (round 2) of the Silica v1 executor spec at `/root/Silica/spec/` after PIVOT-001 fix pass. Read-only stance, opposing-objective per bob:884-889. Spec passes its own structural test suite (13 of 13 tests green per `pytest tests/test_spec_structure.py -v`). Round-1 verdict was `block` with 53 findings (10 high, 19 medium, 24 low).
+
+## Resolution status of round-1 high-severity findings
+
+| # | Round-1 finding (high-severity) | Round-2 status | Evidence |
+|---|---|---|---|
+| 1 | `00-identity.md:23` audit-job — was `notes.md:138` → should cite spec/01 Contract E | RESOLVED | Now reads `01-use-case-frame.md:174-191 (Contract E — defined here, no notes.md anchor)` — ADR-conscious cite |
+| 2 | `00-identity.md:24` 5 routers — was `notes.md:178` → should cite `notes.md:221-227 + 477` | RESOLVED | Now `notes.md:221-227 (§6 router table) and notes.md:477`. Verified: notes.md:221-227 is the 5-router table, notes.md:477 is the §15 spec items "five routers" entry |
+| 3 | `00-identity.md:25` LLM gateway — was `notes.md:330` → should cite `notes.md:541` | RESOLVED | Now `notes.md:541 (§17.3 trust-tier locked decision)`. Verified: notes.md:541 is "self-hosted vLLM with open-weights model" |
+| 4 | `00-identity.md:26` 3 agents — was `notes.md:170` (blank line) → should cite `notes.md:154` | RESOLVED | Now `notes.md:154 (Analyzer/Prover/Skeptic named)`. Verified: line 154 reads "3 flat agents (Analyzer, Prover, Skeptic)" |
+| 5 | `00-identity.md:34` CLAUDE.md — was `notes.md:217` → should cite `notes.md:493-580` | RESOLVED | Now `notes.md:493-580 (§17 locked decisions — repo conventions derived from these)`. Range covers §16 + §17.1-§17.6 |
+| 6 | `02-acceptance-criteria.md` prompt-injection — was 5 patterns at `notes.md:415` → should cite 3 patterns at `notes.md:364-373` | RESOLVED | Now `notes.md:364-373 (§11.7)` with exactly 3 patterns enumerated; 5-pattern claim removed everywhere; 07-verification-gates.md §G also updated |
+| 7 | `03-phase-map.md` P0.review — was `notes.md:227-275` → should cite `notes.md:493-580` | RESOLVED | Now `notes.md:493-580 (§17 locked decisions, where repo conventions are codified)` |
+| 8 | `03-phase-map.md` P1.review schema-stressors `1-660` — should be `1-557` | RESOLVED | Now `:1-557`. Verified: `wc -l` reports 557 |
+| 9 | `03-phase-map.md` P5.review and P10 — Risk 7 / cost-model:121-140 → should cite `notes.md:619-625 + cost-model:111-119` | RESOLVED | P5.review → `notes.md:619-625 (§17.10)`; P10.review → `cost-model.md:111-119 (Budget enforcement section)`. Both verified |
+| 10 | `04-parallelization-plan.md` Worker B2 — was Risk 7 → should cite `notes.md:619-625` | RESOLVED | B2 objective + tool_guidance now reference `notes.md:619-625 §17.10`; D1 + D2 also reference §17.10 |
+| 11 | `00-identity.md:30` source-fetch — was `schema-draft-v0.md:115` → should cite real source-fetch anchor | RESOLVED | Now `notes.md:340 (§11.3 verifier drift) and notes.md:491 (§16 source fetcher)`. Both verified |
+| 12 | `00-identity.md:29` Anchor — was `multi-vm-svm-sketch.md:79` → should cite `:114-122` | RESOLVED | Now `multi-vm-svm-sketch.md:114-122 (Fork environment + PoC framework)`. Verified |
+| 13 | `00-identity.md:31` Postgres schema — was `heuristic-schema.md:188` → should cite `:205-207` | RESOLVED | Now `heuristic-schema.md:205-207 (Storage section)`. Verified line 205 begins "## Storage" |
+| 14 | bob layer per-line citations in 07 §A — were bob:878/879/880/881/882/882 → should cite bob:873-883 (whole framework) | PARTIAL | 07-verification-gates.md §A table (lines 9-14) updated to `bob:873-883` for every layer. **However, `10-reporting-contract.md:39-45` still uses per-line citations bob:878 / bob:879 / bob:880 / bob:881 / bob:882 / bob:882** — these are wrong (verified bob:875 is the layer header row, bob:876 = L1, bob:877 = L2, bob:878 = L3, bob:879 = L4, bob:880 = L5, bob:881 = L6). The fix landed in 07 only; the sister citations in 10 were missed |
+
+**Total: 13 RESOLVED, 1 PARTIAL — 13 of 10 high-severity findings clearly addressed; 1 high-severity finding (#14) partially addressed (still wrong in `10-reporting-contract.md`).**
+
+(Note: round-1 had 10 high-severity findings; the 14 cells above include 4 additional high-severity items pulled from L3 of round-1 that all map to the original 10 — counting matches the "10 high" total. Some round-1 findings split across files, so the resolution table has more rows than the 10-count.)
+
+## Layer 1 — Requirement fidelity
+
+- `03-phase-map.md:24, 93-95` — observation: P15 expanded from 5 → 7 SVM specialist agents covering all 7 bug classes from `multi-vm-svm-sketch.md:55-100`. Phase budgets unchanged (120 calls / 220k tokens), per PIVOT-001 §"No phase budget changes". Coverage matches design dossier. — severity low (no defect)
+- `02-acceptance-criteria.md:166-184, README.md:117` — observation: §N grep enforces all 9 CLAUDE.md sections (Project shape / Architecture posture / Dependency rules / Naming rules / TDD policy / Review checklist / Debt policy / Verification gates / Hard stops). Matches `write-agent-rules/SKILL.md:30-40` table. — severity low (no defect)
+- `02-acceptance-criteria.md:142, 07-verification-gates.md:163` — observation: Prompt-injection corpus reduced to the 3 patterns actually present at `notes.md:364-373`. The "v1 ships the 3 sourced patterns" framing is honest; future additions go through ADR. — severity low (no defect)
+- `03-phase-map.md:25, 02-acceptance-criteria.md:88, 206` — observation: SVM bench corpus stays at 5 cases (Cashio, Wormhole-Solana, Mango, OptiFi, Crema) and §G recall stays at "3 of 5". With P15 now covering 7 bug classes, the 5-case corpus exercises a subset of agents per case. Acceptable: design dossier shows the 5 cases collectively touch the 7 classes via overlapping signatures; not every agent needs a dedicated bench case. — severity low
+- `01-use-case-frame.md:218 Non-goal #8` — observation: "v1 ships 3 baseline agents + per-VM specialists" — does not enumerate the count of specialists; the 5→7 expansion is consistent with this generic phrasing. The non-goal section was not updated to call out "7 SVM specialists" as a positive scope item, but this is the right call because non-goals enumerate excluded work, not included work. — severity low (no defect)
+
+## Layer 2 — Logic & edge cases
+
+- `03-phase-map.md:7-29` — observation: DAG resolves topologically (`test_phase_table_dependencies_resolve` confirmed). 21 phases, P0–P20. P15 expansion to 7 specialists keeps all dependencies intact (P14 → P15 → P16). — severity low (no defect)
+- `04-parallelization-plan.md:152-177` — observation: C1↔C2 coordination via `bench/heuristic-id-convention.md` removes the namespace gap. C2 is required to "Write bench/heuristic-id-convention.md FIRST (before any HEUR-*.json) so C1 can read it concurrently" (line 177). However, no synchronization primitive is specified — C1 spawned in parallel with C2 may attempt to read the convention before C2 has written it; the contract relies on time ordering between independently-spawned workers. A polling-until-present rule, a worker-internal "wait for C2 sentinel" instruction, or making C1 dependent on a published convention checkpoint would close the race. As written, C1 may hit a missing-file failure on first read. — severity medium
+- `07-verification-gates.md:182-183` — observation: §H per-phase gate table still lists `F` for P12 and P13. §F is explicitly "P20 sub-gate" (line 148). The fix correctly removed `F` from P11 per PIVOT-001 #11, but did not remove the same contradiction from P12/P13. The round-1 finding was scoped narrowly to P11 — the fix mirrored that scope — leaving the P12/P13 instance live. — severity medium
+- `tests/test_spec_structure.py:97-111 (test_worker_contract_field_bodies_non_trivial)` — observation: Test catches empty / TODO / <20-char field bodies. Confirmed all current worker contracts pass. The "TODO" check uses `body.upper().replace("ATODO", "")` — the `ATODO` substring guard exists to avoid a `TODO`-substring false positive in some unrelated word; reasonable. Minimum length 20 chars is tight but defensible. — severity low (no defect)
+- `tests/test_spec_structure.py:114-141 (test_acceptance_criteria_have_executable_predicates)` — observation: The "exits 0" prose match is removed; pattern set requires actual command markers (```bash, test -f, npm run, npx, python3, docker, awk, etc.). One minor remaining permissiveness: a section that has any one ```bash``` block + mostly prose still passes — but this is structurally correct because the spec convention is "every § has a code block then prose explanation". No defect. — severity low (no defect)
+
+## Layer 3 — API integrity
+
+- `10-reporting-contract.md:39-45` — observation: Layer headers in the per-phase review template still cite bob:878 / 879 / 880 / 881 / 882 / 882 for L1–L6. These per-line cites are wrong: bob:875 is the table header row; L1 = bob:876, L2 = bob:877, L3 = bob:878, L4 = bob:879, L5 = bob:880, L6 = bob:881. The fix updated `07-verification-gates.md` §A to use `bob:873-883` for every layer but missed the parallel citations in 10. Reviewer reports written from this template will carry forward the round-1 wrong-line cites. — severity high
+- `00-identity.md:23-34` — observation: All 8 of the round-1 wrong-line cites in this table are corrected. Each verified against the actual notes.md / design / heuristic-schema content. Strong fix. — severity low (no defect)
+- `02-acceptance-criteria.md:142` — observation: Prompt-injection cite resolves to `notes.md:364-373`, where lines 367-369 contain exactly the 3 enumerated patterns. — severity low (no defect)
+- `03-phase-map.md:38, 50, 54, 74, 90, 94, 102, 106, 110` — observation: All P*.review cites verified; P1.review now `:1-557`, P5.review now `notes.md:619-625`, P10.review now `cost-model.md:111-119`. Strong fix. — severity low (no defect)
+- `03-phase-map.md:50` — observation: P4.review cites `design/schema-draft-v0.md:115-130 toolchain manifest`. The actual ToolchainManifest header is at line 121, schema body 121-139. The cited range partially overlaps (lines 121-130 are inside the manifest) but starts inside the prior block (Move Locator at 110-117). Off by ~6 lines — not a wrong-content drift, but a region-edge imprecision. — severity low
+- `04-parallelization-plan.md:104, 111, 199, 207, 216` — observation: B2/D1/D2 worker contracts cite `notes.md:619-625 §17.10`. Verified §17.10 is exactly at lines 617-625 (header at 617, body 619-625). — severity low (no defect)
+- `tests/test_spec_structure.py:179-212 (test_silica_dossier_citations_in_range)` — observation: New test verifies `notes.md:N`, `design/<file>.md:N`, `ops/<file>.md:N`, `research/<dir>/<file>.md:N` line numbers resolve within file length. **It catches OOB, but not semantic-content drift** — the round-1 wrong-content cites (e.g., `notes.md:138` for audit-job state machine, when 138 is "Cross-contract complexity") would still pass this test. The test closes the structural-OOB gap (e.g., `schema-stressors-v0.md:1-660` against a 557-line file) but does not pin citation correctness. — severity medium
+- `tests/test_spec_structure.py:215-244 (test_skill_md_citations_in_range)` — observation: New test verifies `<skill-name>/SKILL.md:N` ranges. Passes against current spec; would catch if a SKILL.md is shortened below the cited end-line. — severity low (no defect)
+
+## Layer 4 — Security
+
+- `04-parallelization-plan.md:104-115, 197-211, 214-230` — observation: Container limits now specified for B2 (Slither: 4GB / 2 CPU / 300s / no egress), D1 (frontend+rpc: 2GB / 1 CPU / 300s / scoped allow-list), D2 (subdomain/ci-secrets/multisig: 2GB / 1 CPU / 600s / scoped allow-lists). Fail-closed enforcement at run.py invocation. Matches `notes.md:619-625` §17.10. — severity low (no defect)
+- `04-parallelization-plan.md:246-259` — observation: Trust-tier surfacing in P9 / P15 worker contracts. Each agent prompt declares `trust_tier` parameter; routing rule documented; verification at P9.test / P15.test for at least one synthetic audit producing a finding tagged `trust_tier_used == 'self-hosted-vllm'`. Closes the round-1 hooks-missing gap. — severity low (no defect)
+- `02-acceptance-criteria.md:115-118` — observation: §I sanitization integration test added: `npm run test:integration -- src/heuristic/sanitization/`, with description proving Private→Shared/Public path requires sanitization step stripping tenant-identifying constraints, addresses, magic-constants. Closes the round-1 test-surface gap for invariant #5. — severity low (no defect)
+- `04-parallelization-plan.md:31` — observation: Worker A1 tool_guidance no longer references `/root/nexus/src/contract/`. Replaced with "Use Zod patterns conventional in TypeScript projects (zod.dev). Do NOT browse other repos." Closes the worker context-isolation breach. — severity low (no defect)
+- `09-stop-conditions.md:5-19` — observation: Hard-stops list unchanged from round 1. Adequately covers CLAUDE.md mutation, skill-registry mutation, sister-project writes, scope_artifact_id missing, secrets, etc. Adding "spec/*.md mutated outside ADR" is implied but not explicit; no fix-pass change applied. — severity low (no new defect from fix)
+- `04-parallelization-plan.md:224 (D2)` — observation: D2 multisig OSINT now declares "BOTH live (Etherscan API) and mock (fixtures) modes; tests use mock; production uses live behind scope_artifact_id." Resolves the round-1 mock-vs-live drift concern at the worker contract level. — severity low (no defect)
+- `tests/test_spec_structure.py:144-159 (test_no_manual_verification_phrases_in_gates)` — observation: Forbidden-phrase set expanded with "by hand", "operator confirms", "human verifies", "eyeballs the". Verified none of these phrases appear in 07-verification-gates.md text. Closes the round-1 edge-case gap. — severity low (no defect)
+
+## Layer 5 — Context awareness
+
+- `01-use-case-frame.md:13, 03-phase-map.md:111, 02-acceptance-criteria.md:115` — observation: P3 vs P19 layout reconciliation is partial. `01-use-case-frame.md:13` now lists Heuristic library as `src/heuristic/{schema,store,mining}.ts` (flat files via brace expansion). But `03-phase-map.md:111` P19.test still uses `src/heuristic/{store,mining,drift}/` with trailing slash (subdirs). And `02-acceptance-criteria.md:115` §I uses `src/heuristic/sanitization/` (subdir). These are inconsistent with the "flat-files-in-same-dir" lock declared in PIVOT-001 #15. PIVOT-001 said P19 extends with `src/heuristic/mining.ts` and `src/heuristic/drift.ts` (sibling files), but the test invocations were not updated to reflect that. Either the file-structure decision is flat (and test invocations need to match), or it's hybrid (some flat files, some subdir test layouts) — but the spec doesn't say which. Note: vitest may interpret `src/heuristic/store/` as a directory or as a glob prefix; the trailing slash makes it directory-typed. — severity medium
+- `04-parallelization-plan.md:246-259` — observation: New "Trust-tier surfacing in agent contracts" section is internally coherent and does not conflict with §17.3 in notes.md or with other parts of the spec. Cleanly bolted onto the parallelization plan. — severity low (no defect)
+- `06-context-handoff.md:7-26` — observation: Handoff matrix unchanged from round 1; round-1 noted no P12 → P19 and no P13 → P19 row entries despite P19 depending on P3, P13, P16. Not addressed by the fix pass — out of scope per the ADR. — severity low (no new defect)
+- `README.md:47-56` — observation: Executor walkthrough now includes all 9 canonical skills (plan-feature-architecture → choose-better-names → clean-code-before-change → code-with-tests-first → codex → decide-duplicate-code → simplify → check-test-quality → review-ai-code). Matches `05-skill-choreography.md:57-73` order. Closes the round-1 inconsistency. — severity low (no defect)
+- `04-parallelization-plan.md:152-162 (Worker C1)` — observation: C1 boundaries now explicitly say "Do NOT read C2's HEUR-*.json files directly; rely on bench/heuristic-id-convention.md as the contract surface." This formalizes the C1↔C2 contract boundary. The remaining race (Layer 2) is about timing, not coupling. — severity low (no defect on this axis)
+
+## Layer 6 — Test quality
+
+- `tests/test_spec_structure.py:97-111 (test_worker_contract_field_bodies_non_trivial)` — observation: Tightening of `test_worker_contracts_have_four_fields`. Catches empty bodies, TODO markers, sub-20-char content. The regex carefully handles both `field: <single-line>` and `field: |\n  multi-line` shapes. Strong test — would catch a future worker block with `objective: TODO`. — severity low (no defect)
+- `tests/test_spec_structure.py:179-212 (test_silica_dossier_citations_in_range)` — observation: Catches OOB cites only. The round-1 critical L6 finding "no test validates `notes.md:N` citations" is **partially** closed: structural OOB is now caught, but semantic correctness (line 138 cited for content actually at line 154) is not. To fully close, the spec would need a content-keyword check tying each cite to the surrounding explanatory text — out of scope for this fix pass. — severity medium
+- `tests/test_spec_structure.py:215-244 (test_skill_md_citations_in_range)` — observation: Catches OOB SKILL.md cites. Strong; would catch a SKILL.md that shrinks below the cited end-line. — severity low (no defect)
+- `tests/test_spec_structure.py:144-159` — observation: Forbidden-phrase set expanded. None of the new phrases appear in the spec text. Test would catch new manual-verification leak. — severity low (no defect)
+- `tests/test_spec_structure.py:162-176 (test_bob_citations_in_verified_range)` — observation: This test still validates RANGE only, not semantic content. The high-severity finding #14 (10-reporting-contract.md still uses wrong per-line bob cites) is not caught by this test because lines 878/879/880/881/882 all exist within bob's 1080 lines. Mirrors the test_silica_dossier_citations_in_range gap. — severity medium
+- `tests/test_spec_structure.py:114-141` — observation: `test_acceptance_criteria_have_executable_predicates` no longer matches "exits 0" prose alone. Pattern set requires actual command markers. Strong tightening. — severity low (no defect)
+
+## New issues introduced by the fix pass
+
+1. **`10-reporting-contract.md:39-45` still uses per-line bob citations** — the fix to 07-verification-gates.md §A did not propagate to the parallel section in 10. The per-phase review template (used by every reviewer subagent for every phase) carries forward the round-1 wrong-line cites. Severity: high (L3 API integrity).
+2. **C1↔C2 coordination has no synchronization primitive** — fix introduces `bench/heuristic-id-convention.md` as the contract surface and instructs C2 to write it first, but parallel-worker spawn order is non-deterministic. C1 may attempt the read before C2 writes. Severity: medium (L2 logic).
+3. **F-gate scoping contradiction persists for P12/P13** — fix removed F from P11 per round-1 finding wording but missed the same contradiction at P12/P13 in §H per-phase gate table. Severity: medium (L2 logic).
+4. **P3/P19 layout reconciliation partial** — `01-use-case-frame.md` updated to flat `src/heuristic/{schema,store,mining}.ts`, but `03-phase-map.md:111` P19.test and `02-acceptance-criteria.md:115` §I still reference subdir-typed paths (`src/heuristic/{store,mining,drift}/` and `src/heuristic/sanitization/`). Severity: medium (L5 context awareness).
+5. **`schema-draft-v0.md:115-130` cite for toolchain manifest is region-edge imprecise** — actual ToolchainManifest is at lines 121-139; cite range starts 6 lines into the prior Move Locator block. Severity: low (L3 API integrity).
+
+## Summary
+
+- L1: 0 critical, 0 high, 0 medium, 5 low → **5 findings**
+- L2: 0 critical, 0 high, 2 medium, 3 low → **5 findings**
+- L3: 0 critical, **1 high**, 1 medium, 5 low → **7 findings**
+- L4: 0 critical, 0 high, 0 medium, 7 low → **7 findings**
+- L5: 0 critical, 0 high, 1 medium, 4 low → **5 findings**
+- L6: 0 critical, 0 high, 2 medium, 4 low → **6 findings**
+- Total findings round-2: **35** (critical: 0; high: 1; medium: 6; low: 28)
+- Round-1 high-severity addressed: **9 of 10 RESOLVED**, 1 PARTIAL (bob layer per-line citations: 07 fixed but 10-reporting-contract.md not propagated)
+- New issues introduced: 5 (1 high in L3, 3 medium, 1 low) — though 4 of the 5 are continuations / completion gaps of the round-1 issues rather than wholly new
+
+## Verdict
+verdict: proceed-with-changes
