@@ -1,0 +1,60 @@
+# Node
+node_modules/
+dist/
+build/
+.npm/
+*.tsbuildinfo
+.pnpm-store/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+
+# Foundry
+out/
+cache/
+broadcast/
+
+# Solana / Anchor
+target/
+.anchor/
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs / coverage
+*.log
+logs/
+coverage/
+.nyc_output/
+
+# Audit harness scratch (provisional — refine as the spec lands)
+fork-cache/
+poc-artifacts/
+bench-runs/
+reports/
+
+# Local Claude / agent scratch
+.claude/
