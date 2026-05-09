@@ -1,0 +1,49 @@
+{
+  "schema_version": "silica.heuristic.v0",
+  "id": "HEUR-ORACLE-01",
+  "version": 1,
+  "status": "active",
+  "deprecated": false,
+  "name": "Spot price oracle manipulation via flash loan",
+  "summary": "Protocol reads spot price from AMM pool susceptible to flash-loan manipulation",
+  "category": "oracle",
+  "taxonomy_links": [
+    "DEFI-ORACLE-SPOT-PRICE-MANIPULATION-001"
+  ],
+  "vm_scope": [
+    "evm"
+  ],
+  "applicability": {
+    "applicable_when": [
+      "Protocol reads spot price from AMM pool susceptible to flash-loan manipulation"
+    ]
+  },
+  "confidence_prior": 0.88,
+  "severity_default": "high",
+  "tenant_visibility": "public",
+  "minted_by": {
+    "founding_findings": [],
+    "evidence_class": "real-exploit",
+    "minted_at": "2026-05-08T00:00:00Z",
+    "minted_by_agent": "silica-seed-p13"
+  },
+  "implementations": [
+    {
+      "kind": "slither-detector",
+      "ref": "uri:silica/detectors/heur_oracle_01.py",
+      "version": "1.0.0"
+    }
+  ],
+  "regression_cases": [
+    "bench_heur_oracle_01"
+  ],
+  "false_positive_shapes": [],
+  "lineage": [
+    {
+      "version": 1,
+      "summary": "Initial seed from bug-taxonomy.md (P13)",
+      "changed_at": "2026-05-08T00:00:00Z"
+    }
+  ],
+  "n_observations": 0
+}

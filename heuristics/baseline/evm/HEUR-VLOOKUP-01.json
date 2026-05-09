@@ -1,0 +1,49 @@
+{
+  "schema_version": "silica.heuristic.v0",
+  "id": "HEUR-VLOOKUP-01",
+  "version": 1,
+  "status": "active",
+  "deprecated": false,
+  "name": "Missing return value check on low-level call",
+  "summary": "Low-level call() or delegatecall() result not checked; silent failure proceeds",
+  "category": "validation",
+  "taxonomy_links": [
+    "DEFI-VALIDATION-MISSING-RETURN-CHECK-001"
+  ],
+  "vm_scope": [
+    "evm"
+  ],
+  "applicability": {
+    "applicable_when": [
+      "Low-level call() or delegatecall() result not checked; silent failure proceeds"
+    ]
+  },
+  "confidence_prior": 0.8,
+  "severity_default": "high",
+  "tenant_visibility": "public",
+  "minted_by": {
+    "founding_findings": [],
+    "evidence_class": "real-exploit",
+    "minted_at": "2026-05-08T00:00:00Z",
+    "minted_by_agent": "silica-seed-p13"
+  },
+  "implementations": [
+    {
+      "kind": "slither-detector",
+      "ref": "uri:silica/detectors/heur_vlookup_01.py",
+      "version": "1.0.0"
+    }
+  ],
+  "regression_cases": [
+    "bench_heur_vlookup_01"
+  ],
+  "false_positive_shapes": [],
+  "lineage": [
+    {
+      "version": 1,
+      "summary": "Initial seed from bug-taxonomy.md (P13)",
+      "changed_at": "2026-05-08T00:00:00Z"
+    }
+  ],
+  "n_observations": 0
+}

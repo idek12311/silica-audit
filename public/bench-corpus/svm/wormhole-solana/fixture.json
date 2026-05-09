@@ -1,0 +1,14 @@
+{
+  "case_id": "wormhole-solana-february-2022",
+  "protocol": "Wormhole Bridge (Solana side)",
+  "vm": "svm",
+  "cluster": "mainnet-beta",
+  "slot": 119203745,
+  "program_id": "worm2ZoG2kUd4vFXhvjh93UUH596ayRfgQ2MgjNMTth",
+  "loss_usd": 326000000,
+  "currency": "wETH",
+  "difficulty": "hard",
+  "tx_type": "multi",
+  "bug_class": "signature-verification",
+  "description": "Wormhole guardian signature verification used Sysvar1nstructions without verifying the passed account was the real sysvar. Attacker forged guardian signatures, minted 120k wETH."
+}

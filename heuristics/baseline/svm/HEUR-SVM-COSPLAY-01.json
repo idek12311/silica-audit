@@ -1,0 +1,49 @@
+{
+  "schema_version": "silica.heuristic.v0",
+  "id": "HEUR-SVM-COSPLAY-01",
+  "version": 1,
+  "status": "active",
+  "deprecated": false,
+  "name": "Account type cosplay via incomplete ownership chain",
+  "summary": "Account hierarchy validation incomplete; attacker inserts fake intermediate account (Cashio pattern)",
+  "category": "account-cosplay",
+  "taxonomy_links": [
+    "SVM-ACCOUNT-TYPE-COSPLAY-001"
+  ],
+  "vm_scope": [
+    "svm"
+  ],
+  "applicability": {
+    "applicable_when": [
+      "Account hierarchy validation incomplete; attacker inserts fake intermediate account (Cashio pattern)"
+    ]
+  },
+  "confidence_prior": 0.9,
+  "severity_default": "high",
+  "tenant_visibility": "public",
+  "minted_by": {
+    "founding_findings": [],
+    "evidence_class": "real-exploit",
+    "minted_at": "2026-05-08T00:00:00Z",
+    "minted_by_agent": "silica-seed-p16"
+  },
+  "implementations": [
+    {
+      "kind": "llm-rubric",
+      "ref": "uri:silica/svm-rubrics/heur-svm-cosplay-01.md",
+      "version": "1.0.0"
+    }
+  ],
+  "regression_cases": [
+    "bench_heur_svm_cosplay_01"
+  ],
+  "false_positive_shapes": [],
+  "lineage": [
+    {
+      "version": 1,
+      "summary": "Initial seed from SVM bug classes P16",
+      "changed_at": "2026-05-08T00:00:00Z"
+    }
+  ],
+  "n_observations": 0
+}

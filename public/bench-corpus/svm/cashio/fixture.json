@@ -1,0 +1,14 @@
+{
+  "case_id": "cashio-march-2022",
+  "protocol": "Cashio",
+  "vm": "svm",
+  "cluster": "mainnet-beta",
+  "slot": 123451000,
+  "program_id": "CASHVDm2wsJXfhj6VWxb7GiMdoLc17Du7paH4bNr5woT",
+  "loss_usd": 48000000,
+  "currency": "CASH",
+  "difficulty": "medium",
+  "tx_type": "single",
+  "bug_class": "incomplete-validation",
+  "description": "Cashio mint account validation did not verify the full chain of ownership. Attacker created a fake collateral account that passed shallow validation, then minted unbacked CASH tokens."
+}

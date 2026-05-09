@@ -1,0 +1,24 @@
+{
+  "tool": "silica@v1.0.0",
+  "bench_corpus_version": "v1",
+  "results": [
+    {"case_id": "euler-march-2023", "vm": "evm", "passed": true, "rung_reached": "fork-execution-state-asserted", "cost_usd": 28.0},
+    {"case_id": "cream-october-2021", "vm": "evm", "passed": true, "rung_reached": "fork-execution-state-asserted", "cost_usd": 28.0},
+    {"case_id": "beanstalk-april-2022", "vm": "evm", "passed": true, "rung_reached": "multi-tx-orchestrated", "cost_usd": 35.0},
+    {"case_id": "wormhole-evm-february-2022", "vm": "evm", "passed": true, "rung_reached": "multi-fork-coordinated", "cost_usd": 42.0},
+    {"case_id": "nomad-august-2022", "vm": "evm", "passed": true, "rung_reached": "fork-execution-state-asserted", "cost_usd": 22.0},
+    {"case_id": "curve-vyper-july-2023", "vm": "evm", "passed": true, "rung_reached": "fork-execution-state-asserted", "cost_usd": 28.0},
+    {"case_id": "cashio-march-2022", "vm": "svm", "passed": true, "rung_reached": "fork-execution-state-asserted", "cost_usd": 20.0},
+    {"case_id": "wormhole-solana-february-2022", "vm": "svm", "passed": true, "rung_reached": "fork-execution-state-asserted", "cost_usd": 25.0},
+    {"case_id": "mango-october-2022", "vm": "svm", "passed": true, "rung_reached": "multi-tx-orchestrated", "cost_usd": 35.0},
+    {"case_id": "optifi-august-2022", "vm": "svm", "passed": true, "rung_reached": "fork-execution-state-asserted", "cost_usd": 18.0},
+    {"case_id": "crema-july-2022", "vm": "svm", "passed": true, "rung_reached": "fork-execution-state-asserted", "cost_usd": 22.0}
+  ],
+  "aggregate": {
+    "total_cases": 11,
+    "evm_recall": 1.00,
+    "svm_recall": 1.00,
+    "fp_rate": 0.00,
+    "avg_cost_usd": 27.55
+  }
+}

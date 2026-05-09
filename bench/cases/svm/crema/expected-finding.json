@@ -1,0 +1,16 @@
+{
+  "schema_version": "silica.finding.v0.1",
+  "class": {
+    "taxonomy_id": "SVM-ARBITRARY-CPI-TICK-ARRAY-001",
+    "label": "Tick array account not verified as owned by pool program",
+    "category": "account-validation"
+  },
+  "severity": { "level": "critical", "loss_basis": "actual-loss-if-exploited" },
+  "validation": { "highest_applicable": "fork-execution-state-asserted" },
+  "heuristics_cited": [
+    { "heuristic_id": "HEUR-SVM-CPI-01", "version": "v1", "weight": 0.88 }
+  ],
+  "remediation": {
+    "summary": "Verify tick-array account owner equals the Clmm program ID. Add Anchor owner constraint or manual account.owner check."
+  }
+}

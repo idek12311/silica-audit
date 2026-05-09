@@ -1,0 +1,16 @@
+{
+  "schema_version": "silica.finding.v0.1",
+  "class": {
+    "taxonomy_id": "DEFI-ORACLE-SPOT-PRICE-MANIPULATION-SVM-001",
+    "label": "Spot price oracle susceptible to flash-loan + large-position manipulation",
+    "category": "oracle"
+  },
+  "severity": { "level": "critical", "loss_basis": "actual-loss-if-exploited" },
+  "validation": { "highest_applicable": "multi-tx-orchestrated" },
+  "heuristics_cited": [
+    { "heuristic_id": "HEUR-SVM-AC-01", "version": "v1", "weight": 0.80 }
+  ],
+  "remediation": {
+    "summary": "Use TWAP oracle with minimum window of 30 minutes. Add position-size limits for borrowing against single-asset collateral."
+  }
+}

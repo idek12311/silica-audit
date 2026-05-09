@@ -1,0 +1,16 @@
+{
+  "case_id": "beanstalk-april-2022",
+  "protocol": "Beanstalk Farms",
+  "chain_id": 1,
+  "block": 14602790,
+  "exploit_tx": "0xcd314668aaa9fbc4ff0f2764d8d76a6b21f5f559c2c90e6a87fa66f4c91b5c9d",
+  "vulnerable_contract": "[verify-beanstalk-diamond-address]",
+  "vulnerable_function": "emergencyCommit(uint32)",
+  "loss_usd": 182000000,
+  "currency": "BEAN/stablecoins",
+  "difficulty": "medium",
+  "tx_type": "single-atomic",
+  "bug_class": "governance-flash-vote",
+  "actor_assumption": "governance-proposer",
+  "description": "Beanstalk governance reads vote weight at commit time, not proposal creation time. Flash loan enables instant supermajority Stalk acquisition and emergencyCommit of malicious BIP in single tx."
+}

@@ -1,0 +1,15 @@
+{
+  "case_id": "nomad-august-2022",
+  "protocol": "Nomad Bridge",
+  "chain_id": 1,
+  "block": 15259101,
+  "exploit_tx": "[verify-first-exploit-tx]",
+  "vulnerable_contract": "[verify-nomad-replica-address]",
+  "vulnerable_function": "process(bytes)",
+  "loss_usd": 190000000,
+  "currency": "multiple",
+  "difficulty": "easy",
+  "tx_type": "multi-tx-copycat",
+  "bug_class": "merkle-init-zero",
+  "description": "Nomad Replica.initialize() set trusted merkle root to 0x00. Verification logic accepted any message whose proof reduced to 0x00 (empty/missing proofs always pass). First exploiter noticed; copycat attackers replayed within hours."
+}

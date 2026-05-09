@@ -1,0 +1,49 @@
+{
+  "schema_version": "silica.heuristic.v0",
+  "id": "HEUR-LEND-01",
+  "version": 1,
+  "status": "active",
+  "deprecated": false,
+  "name": "Lending function mutates collateral without health check",
+  "summary": "Balance-mutating function in lending market does not call checkLiquidity / health factor check",
+  "category": "lending-liquidation",
+  "taxonomy_links": [
+    "DEFI-LENDING-HEALTH-CHECK-BYPASS-001"
+  ],
+  "vm_scope": [
+    "evm"
+  ],
+  "applicability": {
+    "applicable_when": [
+      "Balance-mutating function in lending market does not call checkLiquidity / health factor check"
+    ]
+  },
+  "confidence_prior": 0.9,
+  "severity_default": "high",
+  "tenant_visibility": "public",
+  "minted_by": {
+    "founding_findings": [],
+    "evidence_class": "real-exploit",
+    "minted_at": "2026-05-08T00:00:00Z",
+    "minted_by_agent": "silica-seed-p13"
+  },
+  "implementations": [
+    {
+      "kind": "slither-detector",
+      "ref": "uri:silica/detectors/heur_lend_01.py",
+      "version": "1.0.0"
+    }
+  ],
+  "regression_cases": [
+    "bench_heur_lend_01"
+  ],
+  "false_positive_shapes": [],
+  "lineage": [
+    {
+      "version": 1,
+      "summary": "Initial seed from bug-taxonomy.md (P13)",
+      "changed_at": "2026-05-08T00:00:00Z"
+    }
+  ],
+  "n_observations": 0
+}

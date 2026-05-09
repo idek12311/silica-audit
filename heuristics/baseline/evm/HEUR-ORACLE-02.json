@@ -1,0 +1,49 @@
+{
+  "schema_version": "silica.heuristic.v0",
+  "id": "HEUR-ORACLE-02",
+  "version": 1,
+  "status": "active",
+  "deprecated": false,
+  "name": "Stale Chainlink price not rejected",
+  "summary": "Chainlink price staleness check (updatedAt + heartbeat) not enforced",
+  "category": "oracle",
+  "taxonomy_links": [
+    "DEFI-ORACLE-STALE-CHAINLINK-001"
+  ],
+  "vm_scope": [
+    "evm"
+  ],
+  "applicability": {
+    "applicable_when": [
+      "Chainlink price staleness check (updatedAt + heartbeat) not enforced"
+    ]
+  },
+  "confidence_prior": 0.85,
+  "severity_default": "high",
+  "tenant_visibility": "public",
+  "minted_by": {
+    "founding_findings": [],
+    "evidence_class": "real-exploit",
+    "minted_at": "2026-05-08T00:00:00Z",
+    "minted_by_agent": "silica-seed-p13"
+  },
+  "implementations": [
+    {
+      "kind": "slither-detector",
+      "ref": "uri:silica/detectors/heur_oracle_02.py",
+      "version": "1.0.0"
+    }
+  ],
+  "regression_cases": [
+    "bench_heur_oracle_02"
+  ],
+  "false_positive_shapes": [],
+  "lineage": [
+    {
+      "version": 1,
+      "summary": "Initial seed from bug-taxonomy.md (P13)",
+      "changed_at": "2026-05-08T00:00:00Z"
+    }
+  ],
+  "n_observations": 0
+}

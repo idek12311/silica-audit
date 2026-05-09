@@ -1,0 +1,49 @@
+{
+  "schema_version": "silica.heuristic.v0",
+  "id": "HEUR-PROXY-03",
+  "version": 1,
+  "status": "active",
+  "deprecated": false,
+  "name": "Storage collision in proxy upgrade",
+  "summary": "Proxy and implementation use same storage slot for different variables (non-EIP-1967 layout)",
+  "category": "proxy-upgradeability",
+  "taxonomy_links": [
+    "DEFI-PROXY-STORAGE-COLLISION-001"
+  ],
+  "vm_scope": [
+    "evm"
+  ],
+  "applicability": {
+    "applicable_when": [
+      "Proxy and implementation use same storage slot for different variables (non-EIP-1967 layout)"
+    ]
+  },
+  "confidence_prior": 0.85,
+  "severity_default": "high",
+  "tenant_visibility": "public",
+  "minted_by": {
+    "founding_findings": [],
+    "evidence_class": "real-exploit",
+    "minted_at": "2026-05-08T00:00:00Z",
+    "minted_by_agent": "silica-seed-p13"
+  },
+  "implementations": [
+    {
+      "kind": "slither-detector",
+      "ref": "uri:silica/detectors/heur_proxy_03.py",
+      "version": "1.0.0"
+    }
+  ],
+  "regression_cases": [
+    "bench_heur_proxy_03"
+  ],
+  "false_positive_shapes": [],
+  "lineage": [
+    {
+      "version": 1,
+      "summary": "Initial seed from bug-taxonomy.md (P13)",
+      "changed_at": "2026-05-08T00:00:00Z"
+    }
+  ],
+  "n_observations": 0
+}

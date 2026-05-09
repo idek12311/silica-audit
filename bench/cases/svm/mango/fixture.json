@@ -1,0 +1,14 @@
+{
+  "case_id": "mango-october-2022",
+  "protocol": "Mango Markets",
+  "vm": "svm",
+  "cluster": "mainnet-beta",
+  "slot": 153474100,
+  "program_id": "[verify-mango-v3-program-id]",
+  "loss_usd": 117000000,
+  "currency": "MNGO/USDC",
+  "difficulty": "hard",
+  "tx_type": "multi",
+  "bug_class": "flash-loan-oracle-manip",
+  "description": "Attacker Avi Eisenberg used large spot-market buys to inflate MNGO price on Mango's oracle, then borrowed against inflated collateral. Self-described as 'highly profitable trading'."
+}

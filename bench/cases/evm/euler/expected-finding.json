@@ -1,0 +1,18 @@
+{
+  "schema_version": "silica.finding.v0.1",
+  "class": {
+    "taxonomy_id": "DEFI-LENDING-HEALTH-CHECK-BYPASS-001",
+    "label": "donateToReserves missing post-mutation liquidity check",
+    "category": "lending-liquidation"
+  },
+  "severity": { "level": "critical", "loss_basis": "actual-loss-if-exploited" },
+  "validation": {
+    "highest_applicable": "multi-tx-orchestrated"
+  },
+  "heuristics_cited": [
+    { "heuristic_id": "HEUR-LEND-01", "version": "v1", "weight": 0.9 }
+  ],
+  "remediation": {
+    "summary": "Add checkLiquidity(account) call at end of donateToReserves(), consistent with all other balance-mutating functions in Etoken."
+  }
+}

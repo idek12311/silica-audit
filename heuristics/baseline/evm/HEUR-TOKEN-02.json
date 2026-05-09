@@ -1,0 +1,49 @@
+{
+  "schema_version": "silica.heuristic.v0",
+  "id": "HEUR-TOKEN-02",
+  "version": 1,
+  "status": "active",
+  "deprecated": false,
+  "name": "Fee-on-transfer token in AMM pool without fee accounting",
+  "summary": "AMM pool assumes transferFrom delivers exact amount; fee-on-transfer token breaks invariant",
+  "category": "token-standard",
+  "taxonomy_links": [
+    "DEFI-TOKEN-FEE-ON-TRANSFER-AMM-001"
+  ],
+  "vm_scope": [
+    "evm"
+  ],
+  "applicability": {
+    "applicable_when": [
+      "AMM pool assumes transferFrom delivers exact amount; fee-on-transfer token breaks invariant"
+    ]
+  },
+  "confidence_prior": 0.78,
+  "severity_default": "high",
+  "tenant_visibility": "public",
+  "minted_by": {
+    "founding_findings": [],
+    "evidence_class": "real-exploit",
+    "minted_at": "2026-05-08T00:00:00Z",
+    "minted_by_agent": "silica-seed-p13"
+  },
+  "implementations": [
+    {
+      "kind": "slither-detector",
+      "ref": "uri:silica/detectors/heur_token_02.py",
+      "version": "1.0.0"
+    }
+  ],
+  "regression_cases": [
+    "bench_heur_token_02"
+  ],
+  "false_positive_shapes": [],
+  "lineage": [
+    {
+      "version": 1,
+      "summary": "Initial seed from bug-taxonomy.md (P13)",
+      "changed_at": "2026-05-08T00:00:00Z"
+    }
+  ],
+  "n_observations": 0
+}

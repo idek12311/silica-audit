@@ -1,0 +1,14 @@
+{
+  "case_id": "crema-july-2022",
+  "protocol": "Crema Finance",
+  "vm": "svm",
+  "cluster": "mainnet-beta",
+  "slot": 141800000,
+  "program_id": "[verify-crema-program-id]",
+  "loss_usd": 8800000,
+  "currency": "multiple",
+  "difficulty": "hard",
+  "tx_type": "multi",
+  "bug_class": "flash-loan-tick-array",
+  "description": "Attacker used flash loan + forged tick-array accounts to manipulate Crema's concentrated liquidity pool fee calculation, draining liquidity providers."
+}

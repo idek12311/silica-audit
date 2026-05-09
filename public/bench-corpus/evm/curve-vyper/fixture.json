@@ -1,0 +1,15 @@
+{
+  "case_id": "curve-vyper-july-2023",
+  "protocol": "Curve Finance (Vyper compiler bug)",
+  "chain_id": 1,
+  "block": 17806278,
+  "exploit_tx": "[verify-first-curve-exploit-tx]",
+  "vulnerable_contract": "[verify-vyper-pool-address]",
+  "vulnerable_function": "add_liquidity / remove_liquidity",
+  "loss_usd": 73000000,
+  "currency": "ETH/CRV/various",
+  "difficulty": "very-hard",
+  "tx_type": "multi-tx",
+  "bug_class": "compiler-bug",
+  "description": "Vyper compiler versions 0.2.15, 0.2.16, 0.3.0 had a malfunctioning reentrancy lock implementation. Reentrancy locks compiled to those versions did not actually prevent reentrancy, allowing cross-function reentrancy exploits on Curve pools."
+}

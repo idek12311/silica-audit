@@ -1,0 +1,49 @@
+{
+  "schema_version": "silica.heuristic.v0",
+  "id": "HEUR-SVM-CPI-02",
+  "version": 1,
+  "status": "active",
+  "deprecated": false,
+  "name": "Missing program account constraint on CPI invoke",
+  "summary": "invoke() or invoke_signed() without verifying program account is the expected program",
+  "category": "arbitrary-cpi",
+  "taxonomy_links": [
+    "SVM-ARBITRARY-CPI-002"
+  ],
+  "vm_scope": [
+    "svm"
+  ],
+  "applicability": {
+    "applicable_when": [
+      "invoke() or invoke_signed() without verifying program account is the expected program"
+    ]
+  },
+  "confidence_prior": 0.82,
+  "severity_default": "high",
+  "tenant_visibility": "public",
+  "minted_by": {
+    "founding_findings": [],
+    "evidence_class": "real-exploit",
+    "minted_at": "2026-05-08T00:00:00Z",
+    "minted_by_agent": "silica-seed-p16"
+  },
+  "implementations": [
+    {
+      "kind": "llm-rubric",
+      "ref": "uri:silica/svm-rubrics/heur-svm-cpi-02.md",
+      "version": "1.0.0"
+    }
+  ],
+  "regression_cases": [
+    "bench_heur_svm_cpi_02"
+  ],
+  "false_positive_shapes": [],
+  "lineage": [
+    {
+      "version": 1,
+      "summary": "Initial seed from SVM bug classes P16",
+      "changed_at": "2026-05-08T00:00:00Z"
+    }
+  ],
+  "n_observations": 0
+}

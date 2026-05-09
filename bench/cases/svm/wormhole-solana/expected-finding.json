@@ -1,0 +1,16 @@
+{
+  "schema_version": "silica.finding.v0.1",
+  "class": {
+    "taxonomy_id": "SVM-SYSVAR-SPOOFING-WORMHOLE-001",
+    "label": "Sysvar account not verified — guardian signature bypass",
+    "category": "sysvar-validation"
+  },
+  "severity": { "level": "critical", "loss_basis": "actual-loss-if-exploited" },
+  "validation": { "highest_applicable": "fork-execution-state-asserted" },
+  "heuristics_cited": [
+    { "heuristic_id": "HEUR-SVM-SYSVAR-01", "version": "v1", "weight": 0.95 }
+  ],
+  "remediation": {
+    "summary": "Verify sysvar account key equals the known sysvar address before reading. Use solana_program::sysvar::instructions::check_id()."
+  }
+}

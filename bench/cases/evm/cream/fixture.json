@@ -1,0 +1,15 @@
+{
+  "case_id": "cream-october-2021",
+  "protocol": "Cream Finance",
+  "chain_id": 1,
+  "block": 13312000,
+  "exploit_tx": "0xa9a1b8ea288eb9ad315088f17f7c7386b9989c95b4d13c81b69d5ddad7ffe61e",
+  "vulnerable_contract": "[verify-cAMP-contract-address]",
+  "vulnerable_function": "borrow(uint256)",
+  "loss_usd": 18800000,
+  "currency": "AMP/ETH",
+  "difficulty": "medium",
+  "tx_type": "single-multi-internal",
+  "bug_class": "cross-function-reentrancy",
+  "description": "ERC-777 tokensReceived hook fires mid-borrow before cToken accounting updates, enabling cross-function reentrancy with flash-loan amplification."
+}

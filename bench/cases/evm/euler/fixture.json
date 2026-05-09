@@ -1,0 +1,16 @@
+{
+  "case_id": "euler-march-2023",
+  "protocol": "Euler Finance",
+  "chain_id": 1,
+  "block": 16817993,
+  "exploit_tx": "0xc310a0affe2169d1f6feec1c63dbc7f7c62a887fa48795d327d4d2da2d6b111d",
+  "setup_tx": "0x71a908be0bef6174bccc3d493becdfd28395d8898f6f0f1ba999d2a3aaad0dee",
+  "vulnerable_contract": "0x27182842e098f60e3d576794a5bffb0777e025d3",
+  "vulnerable_function": "donateToReserves(uint256,uint256)",
+  "loss_usd": 197000000,
+  "currency": "DAI/WBTC/stETH/USDC",
+  "difficulty": "hard",
+  "tx_type": "multi-tx",
+  "bug_class": "donation-accounting + liquidation-math",
+  "description": "Euler donateToReserves() missing checkLiquidity() call after balance mutation enables self-induced underwater state and profitable self-liquidation via discount amplification."
+}

@@ -1,0 +1,16 @@
+{
+  "schema_version": "silica.finding.v0.1",
+  "class": {
+    "taxonomy_id": "DEFI-GOVERNANCE-FLASHLOAN-VOTE-001",
+    "label": "Governance vote weight read at execution time, enabling flash-loan voting power acquisition",
+    "category": "governance"
+  },
+  "severity": { "level": "critical", "loss_basis": "actual-loss-if-exploited" },
+  "validation": { "highest_applicable": "multi-tx-orchestrated" },
+  "heuristics_cited": [
+    { "heuristic_id": "HEUR-GOV-01", "version": "v1", "weight": 0.95 }
+  ],
+  "remediation": {
+    "summary": "Snapshot vote weight at proposal creation block. Add timelock between proposal and execution. Require Stalk age minimum before voting."
+  }
+}

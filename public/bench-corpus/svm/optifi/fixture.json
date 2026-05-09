@@ -1,0 +1,14 @@
+{
+  "case_id": "optifi-august-2022",
+  "protocol": "OptiFi",
+  "vm": "svm",
+  "cluster": "mainnet-beta",
+  "slot": 148000000,
+  "program_id": "[verify-optifi-program-id]",
+  "loss_usd": 661000,
+  "currency": "USDC",
+  "difficulty": "easy",
+  "tx_type": "single",
+  "bug_class": "program-close",
+  "description": "OptiFi team accidentally called solana_program::system_instruction::close_account on the main program account, permanently closing the program and locking $661k in program-owned accounts."
+}

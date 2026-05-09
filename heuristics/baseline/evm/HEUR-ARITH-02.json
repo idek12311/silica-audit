@@ -1,0 +1,49 @@
+{
+  "schema_version": "silica.heuristic.v0",
+  "id": "HEUR-ARITH-02",
+  "version": 1,
+  "status": "active",
+  "deprecated": false,
+  "name": "Division before multiplication rounding",
+  "summary": "Division before multiplication causes significant rounding loss for small amounts",
+  "category": "arithmetic",
+  "taxonomy_links": [
+    "DEFI-ARITHMETIC-ROUNDING-LOSS-001"
+  ],
+  "vm_scope": [
+    "evm"
+  ],
+  "applicability": {
+    "applicable_when": [
+      "Division before multiplication causes significant rounding loss for small amounts"
+    ]
+  },
+  "confidence_prior": 0.7,
+  "severity_default": "high",
+  "tenant_visibility": "public",
+  "minted_by": {
+    "founding_findings": [],
+    "evidence_class": "real-exploit",
+    "minted_at": "2026-05-08T00:00:00Z",
+    "minted_by_agent": "silica-seed-p13"
+  },
+  "implementations": [
+    {
+      "kind": "slither-detector",
+      "ref": "uri:silica/detectors/heur_arith_02.py",
+      "version": "1.0.0"
+    }
+  ],
+  "regression_cases": [
+    "bench_heur_arith_02"
+  ],
+  "false_positive_shapes": [],
+  "lineage": [
+    {
+      "version": 1,
+      "summary": "Initial seed from bug-taxonomy.md (P13)",
+      "changed_at": "2026-05-08T00:00:00Z"
+    }
+  ],
+  "n_observations": 0
+}

@@ -1,0 +1,15 @@
+{
+  "case_id": "wormhole-evm-february-2022",
+  "protocol": "Wormhole Bridge (EVM side)",
+  "chain_id": 1,
+  "block": 14223503,
+  "exploit_tx": "[verify-evm-withdrawal-tx]",
+  "vulnerable_contract": "0x3ee18B2214AFF97000D974cf647E54bd6c2a9C8c",
+  "vulnerable_function": "completeTransfer(bytes)",
+  "loss_usd": 326000000,
+  "currency": "ETH/wETH",
+  "difficulty": "hard",
+  "tx_type": "multi-tx",
+  "bug_class": "signature-verification",
+  "description": "Wormhole Solana side: guardian signature verification used Sysvar1nstructions without verifying it was the real sysvar. Attacker minted 120k wETH on Solana, bridged to Ethereum, withdrew real ETH. EVM side completes the bridge withdrawal with the forged VAA."
+}

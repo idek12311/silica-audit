@@ -1,0 +1,17 @@
+{
+  "schema_version": "silica.finding.v0.1",
+  "class": {
+    "taxonomy_id": "DEFI-REENTRANCY-ERC777-CROSS-FUNCTION-001",
+    "label": "ERC-777 tokensReceived hook reentrancy in Compound fork borrow()",
+    "category": "reentrancy"
+  },
+  "severity": { "level": "critical", "loss_basis": "actual-loss-if-exploited" },
+  "validation": { "highest_applicable": "fork-execution-state-asserted" },
+  "heuristics_cited": [
+    { "heuristic_id": "HEUR-RE-01", "version": "v1", "weight": 0.9 },
+    { "heuristic_id": "HEUR-TOKEN-01", "version": "v1", "weight": 0.7 }
+  ],
+  "remediation": {
+    "summary": "Use ReentrancyGuard on borrow(); perform token transfer after all internal state updates (checks-effects-interactions); do not list ERC-777 tokens without per-token reentrancy review."
+  }
+}

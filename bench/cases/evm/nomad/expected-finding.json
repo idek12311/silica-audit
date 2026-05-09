@@ -1,0 +1,17 @@
+{
+  "schema_version": "silica.finding.v0.1",
+  "class": {
+    "taxonomy_id": "DEFI-BRIDGE-MERKLE-ROOT-ZERO-INIT-001",
+    "label": "Bridge message merkle root initialized to zero bytes, accepting all proofs",
+    "category": "bridge"
+  },
+  "severity": { "level": "critical", "loss_basis": "actual-loss-if-exploited" },
+  "validation": { "highest_applicable": "fork-execution-state-asserted" },
+  "heuristics_cited": [
+    { "heuristic_id": "HEUR-BRIDGE-02", "version": "v1", "weight": 0.90 },
+    { "heuristic_id": "HEUR-INIT-01", "version": "v1", "weight": 0.75 }
+  ],
+  "remediation": {
+    "summary": "Never initialize a security-critical merkle root to the zero value. Add a non-zero root assertion in the initialize() function."
+  }
+}

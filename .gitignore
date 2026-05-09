@@ -56,5 +56,9 @@ poc-artifacts/
 bench-runs/
 reports/
 
+# Production heuristics — never published
+heuristics/production/
+heuristics/private/
+
 # Local Claude / agent scratch
 .claude/

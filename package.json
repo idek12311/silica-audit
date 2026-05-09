@@ -1,0 +1,52 @@
+{
+  "name": "silica",
+  "version": "1.0.0",
+  "description": "VM-agnostic smart-contract vulnerability platform (EVM + SVM + off-chain perimeter)",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/main.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/ tools/ --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\" \"tools/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\" \"tools/**/*.ts\"",
+    "test": "vitest run --pool=forks --fileParallelism=false",
+    "test:unit": "vitest run --pool=forks --fileParallelism=false tests/unit",
+    "test:integration": "vitest run --pool=forks --fileParallelism=false tests/integration",
+    "test:security": "vitest run --pool=forks --fileParallelism=false tests/security",
+    "test:coverage": "vitest run --pool=forks --fileParallelism=false --coverage",
+    "test:watch": "vitest --pool=forks",
+    "bench:evm": "tsx bench/run-evm.ts",
+    "bench:svm": "tsx bench/run-svm.ts",
+    "bench:full": "tsx bench/run-full.ts",
+    "check:boundaries": "depcruise --validate .dependency-cruiser.cjs src/",
+    "check:size": "python3 /root/.claude/skills/scan-code-smells/scripts/check_code_shape.py /root/Silica/src /root/Silica/tools --max-file-lines 300 --strict",
+    "db:migrate": "psql $DATABASE_URL -f db/migrations/",
+    "db:reset": "psql $DATABASE_URL -c 'DROP SCHEMA public CASCADE; CREATE SCHEMA public;'"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "zod": "^3.23.8",
+    "ulid": "^2.3.0",
+    "canonicalize": "^2.0.0",
+    "pg": "^8.11.3",
+    "ioredis": "^5.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/pg": "^8.11.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "@vitest/coverage-v8": "^1.3.0",
+    "dependency-cruiser": "^16.3.0",
+    "eslint": "^8.56.0",
+    "jscpd": "^3.5.10",
+    "prettier": "^3.2.5",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.3.1"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "schema_version": "silica.finding.v0.1",
+  "class": {
+    "taxonomy_id": "DEFI-COMPILER-BUG-REENTRANCY-LOCK-FAILURE-001",
+    "label": "Vyper compiler bug: reentrancy lock not enforced in versions 0.2.15-0.3.0",
+    "category": "compiler-vulnerability"
+  },
+  "severity": { "level": "critical", "loss_basis": "actual-loss-if-exploited" },
+  "validation": { "highest_applicable": "fork-execution-state-asserted" },
+  "heuristics_cited": [
+    { "heuristic_id": "HEUR-RE-02", "version": "v1", "weight": 0.85 }
+  ],
+  "remediation": {
+    "summary": "Upgrade Vyper compiler version. Audit all contracts compiled with affected versions (0.2.15, 0.2.16, 0.3.0). Redeploy or patch affected pools."
+  }
+}
