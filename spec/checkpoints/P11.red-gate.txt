@@ -1,0 +1,5 @@
+RED gate: pre-P11 state (before fixture)
+Command: MODEL_FALLBACK_MODE=mock npx tsx bench/run-evm.ts --case euler
+Exit: 1 — 'No cases found matching euler'
+(The bench cases/evm/euler/ directory did not exist before P11)
+

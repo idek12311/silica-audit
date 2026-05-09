@@ -1,0 +1,4 @@
+GREEN gate: post-P11 state (fixture and expected-finding.json written)
+Command: MODEL_FALLBACK_MODE=mock npx tsx bench/run-evm.ts --case euler
+Exit: 0 — '[PASS] euler: Fixture validation passed (mock mode)'
+Result: 1/1 passed
