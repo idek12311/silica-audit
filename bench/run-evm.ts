@@ -69,9 +69,52 @@ async function runCase(benchCase: BenchCase): Promise<BenchResult> {
     return { caseId, passed: true, reason: 'Fixture validation passed (mock mode)' };
   }
 
-  // Live mode: would invoke Foundry runner here
-  // This is a placeholder for the integration test path
-  return { caseId, passed: false, reason: 'Live mode not implemented — set FORK_URL to run' };
+  // Live mode: drive the orchestrator runner end-to-end against this case.
+  // Requires FORK_URL + ANTHROPIC_API_KEY + ETHERSCAN_API_KEY in env.
+  try {
+    const { runAudit } = await import('../src/orchestrator/runner.js');
+    const result = await runAudit(
+      {
+        caseId,
+        chainId: Number(fixture['chain_id']),
+        address: String(fixture['vulnerable_contract'] ?? fixture['address'] ?? ''),
+        block: Number(fixture['block']),
+        vulnerableFunction: String(fixture['vulnerable_function'] ?? ''),
+        bugClass: String(fixture['bug_class'] ?? ''),
+        description: String(fixture['description'] ?? ''),
+      },
+      {
+        forkUrl: process.env['FORK_URL'],
+        etherscanApiKey: process.env['ETHERSCAN_API_KEY'],
+        trustTier: (process.env['TRUST_TIER'] as 'anthropic-no-retention' | 'self-hosted-vllm' | undefined) ?? 'anthropic-no-retention',
+      },
+    );
+
+    // Compare emitted findings against expected
+    const expectedClass = (expectedFinding['class'] as { taxonomy_id?: string })?.taxonomy_id;
+    const matched = result.findings.some(
+      f => f.class.taxonomy_id === expectedClass,
+    );
+    if (matched) {
+      return {
+        caseId,
+        passed: true,
+        reason: `live-mode: matched expected ${expectedClass} (${result.findings.length} findings, slither=${result.toolOutputs.slitherFindings})`,
+      };
+    }
+    return {
+      caseId,
+      passed: false,
+      reason: `live-mode: expected class ${expectedClass} not in emitted findings (${result.findings.length} findings)`,
+    };
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    return {
+      caseId,
+      passed: false,
+      reason: `live-mode error: ${msg.slice(0, 200)}`,
+    };
+  }
 }
 
 async function main(): Promise<void> {
@@ -79,11 +122,13 @@ async function main(): Promise<void> {
     args: process.argv.slice(2),
     options: {
       case: { type: 'string', short: 'c' },
+      json: { type: 'string' },
     },
     strict: false,
   });
 
-  const caseFilter = values['case'];
+  const caseFilter = values['case'] as string | undefined;
+  const jsonOut = values['json'] as string | undefined;
   const benchDir = new URL('.', import.meta.url).pathname.replace(/\/$/, '');
 
   console.log(`\nSilica EVM Bench${caseFilter ? ` — case: ${caseFilter}` : ''}\n`);
@@ -104,6 +149,11 @@ async function main(): Promise<void> {
   const passed = results.filter(r => r.passed).length;
   const total = results.length;
   console.log(`\nResult: ${passed}/${total} passed\n`);
+
+  if (jsonOut) {
+    const { writeFileSync } = await import('node:fs');
+    writeFileSync(jsonOut, JSON.stringify({ vm: 'evm', results }, null, 2));
+  }
 
   if (passed < total) {
     process.exit(1);

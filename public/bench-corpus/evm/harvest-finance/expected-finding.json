@@ -1,0 +1,17 @@
+{
+  "schema_version": "silica.finding.v0.1",
+  "class": {
+    "taxonomy_id": "DEFI-VAULT-SPOT-PRICE-FLASHLOAN-MANIPULATION-001",
+    "label": "Vault share-price computed from Curve spot exchange rate, flash-loan-skewable",
+    "category": "oracle"
+  },
+  "severity": { "level": "critical", "loss_basis": "actual-loss-if-exploited" },
+  "validation": { "highest_applicable": "fork-execution-state-asserted" },
+  "heuristics_cited": [
+    { "heuristic_id": "HEUR-ORACLE-01", "version": "v1", "weight": 0.95 },
+    { "heuristic_id": "HEUR-FLASH-01", "version": "v1", "weight": 0.9 }
+  ],
+  "remediation": {
+    "summary": "Compute vault share-price from a manipulation-resistant oracle, not from the same AMM pool the strategy interacts with. Add a same-block deposit/withdraw cooldown or fee. Cap deposit-then-withdraw round trips inside a single block."
+  }
+}

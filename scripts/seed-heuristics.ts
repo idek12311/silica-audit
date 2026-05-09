@@ -61,7 +61,7 @@ async function main(): Promise<void> {
     strict: false,
   });
 
-  const dir = values['dir'] ?? 'heuristics/baseline/evm';
+  const dir = (values['dir'] as string | undefined) ?? 'heuristics/baseline/evm';
   const fullDir = join(process.cwd(), dir);
 
   console.log(`Loading heuristics from ${fullDir}`);

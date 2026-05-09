@@ -4,8 +4,8 @@ Silica v1 open-source layer: bench corpus, eval framework, and baseline agent.
 
 ## What's here
 
-- `bench-corpus/` — Regression fixtures for 11 known-exploited DeFi protocols (6 EVM + 5 SVM). Each case includes a fixture.json with block/slot anchor and an expected-finding.json with the bug class taxonomy, severity, and heuristic citations.
-- `eval-framework/` — Runner scripts and check utilities for running your own audit harness against the bench corpus.
+- `bench-corpus/` — Regression fixtures for 21 known-exploited DeFi protocols (16 EVM + 5 SVM). Each case includes a fixture.json with block/slot anchor and an expected-finding.json with the bug class taxonomy, severity, and heuristic citations.
+- `eval-framework/` — Runner script (`runner.ts`) for evaluating any audit agent against the bench corpus, plus the latest `score-sheet.json` produced by `scripts/generate-score-sheet.ts`.
 - `baseline-agent.ts` — The simplest possible Silica-compatible analyzer agent. Uses the Anthropic SDK with prompt caching and the open-source heuristic library.
 
 ## Quick start

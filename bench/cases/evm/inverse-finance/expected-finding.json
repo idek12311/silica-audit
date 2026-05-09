@@ -1,0 +1,18 @@
+{
+  "schema_version": "silica.finding.v0.1",
+  "class": {
+    "taxonomy_id": "DEFI-ORACLE-TWAP-THIN-POOL-MANIPULATION-001",
+    "label": "Lending oracle reads TWAP from a thin AMM pool with permissionless update; flash-swap fixes the price",
+    "category": "oracle"
+  },
+  "severity": { "level": "critical", "loss_basis": "actual-loss-if-exploited" },
+  "validation": { "highest_applicable": "fork-execution-state-asserted" },
+  "heuristics_cited": [
+    { "heuristic_id": "HEUR-ORACLE-01", "version": "v1", "weight": 0.9 },
+    { "heuristic_id": "HEUR-ORACLE-03", "version": "v1", "weight": 0.7 },
+    { "heuristic_id": "HEUR-FLASH-01", "version": "v1", "weight": 0.6 }
+  ],
+  "remediation": {
+    "summary": "Do not price collateral via a TWAP read from a single thin AMM pool. Use a Chainlink feed (with staleness/heartbeat checks), or require deep TWAP liquidity over multiple venues. If retaining a Keep3r-style update path, restrict update() to a permissioned keeper or impose a deviation/cooldown threshold."
+  }
+}

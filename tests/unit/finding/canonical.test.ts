@@ -128,4 +128,43 @@ describe('subjectToCanonicalLocator', () => {
       program_version: '1.0.0',
     });
   });
+
+  it('produces null vm and surfaces off_chain_kind/url/domain/github_org for off-chain subjects', () => {
+    const offChainFinding: Finding = {
+      ...baseEVMFinding,
+      subject: {
+        kind: 'off-chain',
+        primary_locator: {
+          off_chain_kind: 'frontend-url',
+          url: 'https://app.example.com/swap',
+          domain: 'example.com',
+          github_org: 'example-org',
+          time_anchor: { kind: 'wallclock', value: '2026-05-09T00:00:00Z' },
+        },
+      },
+    };
+    const locator = subjectToCanonicalLocator(offChainFinding);
+    expect(locator).toEqual({
+      vm: null,
+      off_chain_kind: 'frontend-url',
+      url: 'https://app.example.com/swap',
+      domain: 'example.com',
+      github_org: 'example-org',
+    });
+  });
+
+  it('replaces missing optional off-chain fields with null', () => {
+    const offChainFinding: Finding = {
+      ...baseEVMFinding,
+      subject: {
+        kind: 'off-chain',
+        primary_locator: {
+          off_chain_kind: 'github-org',
+          time_anchor: { kind: 'wallclock', value: '2026-05-09T00:00:00Z' },
+        },
+      },
+    };
+    const locator = subjectToCanonicalLocator(offChainFinding);
+    expect(locator).toMatchObject({ vm: null, url: null, domain: null, github_org: null });
+  });
 });

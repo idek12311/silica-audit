@@ -11,7 +11,7 @@
  * Private-pool heuristics never leak into Shared or Public pools
  * without sanitization.
  */
-import type { Heuristic, TenantVisibility } from './schema.js';
+import type { Heuristic } from './schema.js';
 
 export type SanitizationTarget = 'shared-pool' | 'public';
 

@@ -1,6 +1,6 @@
 import { SvmSpecialistAgent, SVM_INJECTION_DEFENSE } from './svm-shared.js';
-import type { LlmGateway } from '../llm/anthropic-gateway.js';
-import type { TrustTier } from '../llm/anthropic-gateway.js';
+import type { LlmGateway } from '../llm/types.js';
+import type { TrustTier } from '../llm/types.js';
 
 /**
  * SVM-SYSVAR-SPOOFING specialist agent.

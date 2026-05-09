@@ -1,0 +1,17 @@
+{
+  "schema_version": "silica.finding.v0.1",
+  "class": {
+    "taxonomy_id": "DEFI-REENTRANCY-READ-ONLY-CROSS-PROTOCOL-001",
+    "label": "Read-only reentrancy: external protocol reads stale Balancer V2 pool state mid-exit",
+    "category": "reentrancy"
+  },
+  "severity": { "level": "high", "loss_basis": "actual-loss-if-exploited" },
+  "validation": { "highest_applicable": "fork-execution-state-asserted" },
+  "heuristics_cited": [
+    { "heuristic_id": "HEUR-RE-03", "version": "v1", "weight": 0.9 },
+    { "heuristic_id": "HEUR-ORACLE-01", "version": "v1", "weight": 0.6 }
+  ],
+  "remediation": {
+    "summary": "When pricing assets against an external pool's reserves, use Balancer's read-only reentrancy guard (ensureNotInVaultContext) before reading getPoolTokens, or snapshot reserves outside the vulnerable exit/join callback window. Treat any cross-protocol pricing read as reentrancy-sensitive."
+  }
+}

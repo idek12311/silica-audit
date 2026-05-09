@@ -1,0 +1,17 @@
+{
+  "schema_version": "silica.finding.v0.1",
+  "class": {
+    "taxonomy_id": "DEFI-BRIDGE-MPC-DISTRIBUTION-UNVERIFIED-001",
+    "label": "Bridge privileged role gated by single on-chain address with unverifiable off-chain MPC distribution claim",
+    "category": "bridge"
+  },
+  "severity": { "level": "critical", "loss_basis": "actual-loss-if-exploited" },
+  "validation": { "highest_applicable": "off-chain-attestation-review" },
+  "heuristics_cited": [
+    { "heuristic_id": "HEUR-AC-01", "version": "v1", "weight": 0.85 },
+    { "heuristic_id": "HEUR-BRIDGE-01", "version": "v1", "weight": 0.6 }
+  ],
+  "remediation": {
+    "summary": "Refuse to bless any bridge as low-risk when the privileged role is a single on-chain signer with an unverifiable off-chain distribution claim. Either require on-chain proof of N-of-M signing (each signer's address public, threshold enforced in the contract) or honestly price the centralization risk. Continuously monitor privileged-signer activity rate; alert on prolonged silence."
+  }
+}

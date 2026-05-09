@@ -1,5 +1,5 @@
-import type { LlmGateway, GatewayRequest, GatewayResponse } from '../llm/anthropic-gateway.js';
-import type { TrustTier } from '../llm/anthropic-gateway.js';
+import type { LlmGateway, GatewayRequest, GatewayResponse } from '../llm/types.js';
+import type { TrustTier } from '../llm/types.js';
 import type { Finding } from '../finding/schema.js';
 
 // ---------------------------------------------------------------------------

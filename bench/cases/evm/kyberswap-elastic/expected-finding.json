@@ -1,0 +1,17 @@
+{
+  "schema_version": "silica.finding.v0.1",
+  "class": {
+    "taxonomy_id": "DEFI-CL-AMM-TICK-LIQUIDITY-DESYNC-001",
+    "label": "Concentrated-liquidity AMM tick-update and reinvestment paths desynchronize, double-counting liquidity",
+    "category": "arithmetic"
+  },
+  "severity": { "level": "critical", "loss_basis": "actual-loss-if-exploited" },
+  "validation": { "highest_applicable": "fork-execution-state-asserted" },
+  "heuristics_cited": [
+    { "heuristic_id": "HEUR-ARITH-01", "version": "v1", "weight": 0.85 },
+    { "heuristic_id": "HEUR-ARITH-02", "version": "v1", "weight": 0.7 }
+  ],
+  "remediation": {
+    "summary": "Reconcile concentrated-liquidity tick state via a single source-of-truth path. Add invariant assertions that total liquidity at the active tick matches the sum of contributing positions before and after every swap/mint/burn. Fuzz-test contrived swap-then-mint sequences across tick boundaries."
+  }
+}

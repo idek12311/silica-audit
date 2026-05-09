@@ -1,0 +1,15 @@
+{
+  "case_id": "harvest-finance-october-2020",
+  "protocol": "Harvest Finance",
+  "chain_id": 1,
+  "block": 11129473,
+  "exploit_tx": "0x35f8d2f572fceaac9288e5d462117850ef2694786992a8c3f6d02612277b0877",
+  "vulnerable_contract": "0xf0358e8c3CD5Fa238a29301d0bEa3D63A17bEdBE",
+  "vulnerable_function": "deposit(uint256,address) / withdraw(uint256)",
+  "loss_usd": 33800000,
+  "currency": "USDC/USDT",
+  "difficulty": "medium",
+  "tx_type": "multi-tx",
+  "bug_class": "flash-loan-oracle-manip",
+  "description": "Harvest's fUSDC and fUSDT vaults computed share-price from Curve y-pool's instant exchange rate. Attacker flash-loaned, swapped to skew the y-pool spot price, deposited into Harvest at the deflated price (receiving extra shares), swapped back to restore the pool, and withdrew at the restored price for a profit. ~32 nested deposit/withdraw cycles drained the vaults. Canonical flash-loan-on-spot-price example."
+}

@@ -1,24 +1,183 @@
 {
   "tool": "silica@v1.0.0",
   "bench_corpus_version": "v1",
+  "generated_at": "2026-05-09T17:37:58.619Z",
+  "mode": "mock",
   "results": [
-    {"case_id": "euler-march-2023", "vm": "evm", "passed": true, "rung_reached": "fork-execution-state-asserted", "cost_usd": 28.0},
-    {"case_id": "cream-october-2021", "vm": "evm", "passed": true, "rung_reached": "fork-execution-state-asserted", "cost_usd": 28.0},
-    {"case_id": "beanstalk-april-2022", "vm": "evm", "passed": true, "rung_reached": "multi-tx-orchestrated", "cost_usd": 35.0},
-    {"case_id": "wormhole-evm-february-2022", "vm": "evm", "passed": true, "rung_reached": "multi-fork-coordinated", "cost_usd": 42.0},
-    {"case_id": "nomad-august-2022", "vm": "evm", "passed": true, "rung_reached": "fork-execution-state-asserted", "cost_usd": 22.0},
-    {"case_id": "curve-vyper-july-2023", "vm": "evm", "passed": true, "rung_reached": "fork-execution-state-asserted", "cost_usd": 28.0},
-    {"case_id": "cashio-march-2022", "vm": "svm", "passed": true, "rung_reached": "fork-execution-state-asserted", "cost_usd": 20.0},
-    {"case_id": "wormhole-solana-february-2022", "vm": "svm", "passed": true, "rung_reached": "fork-execution-state-asserted", "cost_usd": 25.0},
-    {"case_id": "mango-october-2022", "vm": "svm", "passed": true, "rung_reached": "multi-tx-orchestrated", "cost_usd": 35.0},
-    {"case_id": "optifi-august-2022", "vm": "svm", "passed": true, "rung_reached": "fork-execution-state-asserted", "cost_usd": 18.0},
-    {"case_id": "crema-july-2022", "vm": "svm", "passed": true, "rung_reached": "fork-execution-state-asserted", "cost_usd": 22.0}
+    {
+      "case_id": "beanstalk",
+      "vm": "evm",
+      "passed": true,
+      "rung_reached": "fork-execution-state-asserted",
+      "cost_usd": 28,
+      "reason": "Fixture validation passed (mock mode)"
+    },
+    {
+      "case_id": "cream",
+      "vm": "evm",
+      "passed": true,
+      "rung_reached": "fork-execution-state-asserted",
+      "cost_usd": 28,
+      "reason": "Fixture validation passed (mock mode)"
+    },
+    {
+      "case_id": "curve-vyper",
+      "vm": "evm",
+      "passed": true,
+      "rung_reached": "multi-fork-coordinated",
+      "cost_usd": 42,
+      "reason": "Fixture validation passed (mock mode)"
+    },
+    {
+      "case_id": "euler",
+      "vm": "evm",
+      "passed": true,
+      "rung_reached": "multi-tx-orchestrated",
+      "cost_usd": 35,
+      "reason": "Fixture validation passed (mock mode)"
+    },
+    {
+      "case_id": "harvest-finance",
+      "vm": "evm",
+      "passed": true,
+      "rung_reached": "fork-execution-state-asserted",
+      "cost_usd": 28,
+      "reason": "Fixture validation passed (mock mode)"
+    },
+    {
+      "case_id": "hundred-finance",
+      "vm": "evm",
+      "passed": true,
+      "rung_reached": "multi-tx-orchestrated",
+      "cost_usd": 35,
+      "reason": "Fixture validation passed (mock mode)"
+    },
+    {
+      "case_id": "inverse-finance",
+      "vm": "evm",
+      "passed": true,
+      "rung_reached": "fork-execution-state-asserted",
+      "cost_usd": 28,
+      "reason": "Fixture validation passed (mock mode)"
+    },
+    {
+      "case_id": "kyberswap-elastic",
+      "vm": "evm",
+      "passed": true,
+      "rung_reached": "multi-fork-coordinated",
+      "cost_usd": 42,
+      "reason": "Fixture validation passed (mock mode)"
+    },
+    {
+      "case_id": "multichain",
+      "vm": "evm",
+      "passed": true,
+      "rung_reached": "multi-fork-coordinated",
+      "cost_usd": 42,
+      "reason": "Fixture validation passed (mock mode)"
+    },
+    {
+      "case_id": "nomad",
+      "vm": "evm",
+      "passed": true,
+      "rung_reached": "fork-execution-state-asserted",
+      "cost_usd": 28,
+      "reason": "Fixture validation passed (mock mode)"
+    },
+    {
+      "case_id": "ronin",
+      "vm": "evm",
+      "passed": true,
+      "rung_reached": "multi-fork-coordinated",
+      "cost_usd": 42,
+      "reason": "Fixture validation passed (mock mode)"
+    },
+    {
+      "case_id": "saddle-finance",
+      "vm": "evm",
+      "passed": true,
+      "rung_reached": "multi-tx-orchestrated",
+      "cost_usd": 35,
+      "reason": "Fixture validation passed (mock mode)"
+    },
+    {
+      "case_id": "sentiment-protocol",
+      "vm": "evm",
+      "passed": true,
+      "rung_reached": "multi-tx-orchestrated",
+      "cost_usd": 35,
+      "reason": "Fixture validation passed (mock mode)"
+    },
+    {
+      "case_id": "sushiswap-routeprocessor2",
+      "vm": "evm",
+      "passed": true,
+      "rung_reached": "fork-execution-state-asserted",
+      "cost_usd": 28,
+      "reason": "Fixture validation passed (mock mode)"
+    },
+    {
+      "case_id": "wormhole-evm",
+      "vm": "evm",
+      "passed": true,
+      "rung_reached": "multi-tx-orchestrated",
+      "cost_usd": 35,
+      "reason": "Fixture validation passed (mock mode)"
+    },
+    {
+      "case_id": "yearn-v1",
+      "vm": "evm",
+      "passed": true,
+      "rung_reached": "multi-tx-orchestrated",
+      "cost_usd": 35,
+      "reason": "Fixture validation passed (mock mode)"
+    },
+    {
+      "case_id": "cashio",
+      "vm": "svm",
+      "passed": true,
+      "rung_reached": "fork-execution-state-asserted",
+      "cost_usd": 28,
+      "reason": "Fixture validation passed (mock mode)"
+    },
+    {
+      "case_id": "crema",
+      "vm": "svm",
+      "passed": true,
+      "rung_reached": "multi-tx-orchestrated",
+      "cost_usd": 35,
+      "reason": "Fixture validation passed (mock mode)"
+    },
+    {
+      "case_id": "mango",
+      "vm": "svm",
+      "passed": true,
+      "rung_reached": "multi-tx-orchestrated",
+      "cost_usd": 35,
+      "reason": "Fixture validation passed (mock mode)"
+    },
+    {
+      "case_id": "optifi",
+      "vm": "svm",
+      "passed": true,
+      "rung_reached": "fork-execution-state-asserted",
+      "cost_usd": 28,
+      "reason": "Fixture validation passed (mock mode)"
+    },
+    {
+      "case_id": "wormhole-solana",
+      "vm": "svm",
+      "passed": true,
+      "rung_reached": "multi-tx-orchestrated",
+      "cost_usd": 35,
+      "reason": "Fixture validation passed (mock mode)"
+    }
   ],
   "aggregate": {
-    "total_cases": 11,
-    "evm_recall": 1.00,
-    "svm_recall": 1.00,
-    "fp_rate": 0.00,
-    "avg_cost_usd": 27.55
+    "total_cases": 21,
+    "evm_recall": 1,
+    "svm_recall": 1,
+    "fp_rate": 0,
+    "avg_cost_usd": 33.67
   }
 }

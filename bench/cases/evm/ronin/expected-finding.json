@@ -1,0 +1,17 @@
+{
+  "schema_version": "silica.finding.v0.1",
+  "class": {
+    "taxonomy_id": "DEFI-BRIDGE-SIGNER-SET-CONCENTRATION-001",
+    "label": "Bridge validator quorum reduces to single off-chain controller via signer concentration / delegated signing",
+    "category": "bridge"
+  },
+  "severity": { "level": "critical", "loss_basis": "actual-loss-if-exploited" },
+  "validation": { "highest_applicable": "off-chain-attestation-review" },
+  "heuristics_cited": [
+    { "heuristic_id": "HEUR-BRIDGE-01", "version": "v1", "weight": 0.5 },
+    { "heuristic_id": "HEUR-AC-01", "version": "v1", "weight": 0.85 }
+  ],
+  "remediation": {
+    "summary": "Cluster validator-set members by on-chain identity (deployment, funding source, recurring co-signing). Flag when effective independent control falls below the nominal quorum. Require explicit revocation of any sign-on-behalf delegation when load conditions end."
+  }
+}

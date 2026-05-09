@@ -1,0 +1,17 @@
+{
+  "schema_version": "silica.finding.v0.1",
+  "class": {
+    "taxonomy_id": "DEFI-STABLESWAP-METAPOOL-PRECISION-LOSS-001",
+    "label": "StableSwap metapool swapUnderlying precision loss under skewed base-pool ratio",
+    "category": "arithmetic"
+  },
+  "severity": { "level": "critical", "loss_basis": "actual-loss-if-exploited" },
+  "validation": { "highest_applicable": "fork-execution-state-asserted" },
+  "heuristics_cited": [
+    { "heuristic_id": "HEUR-ARITH-01", "version": "v1", "weight": 0.9 },
+    { "heuristic_id": "HEUR-ARITH-02", "version": "v1", "weight": 0.85 }
+  ],
+  "remediation": {
+    "summary": "Order arithmetic operations to multiply before dividing. Add invariant-preservation post-conditions on swap functions (D non-decreasing, virtual price non-decreasing). Fuzz StableSwap metapool routes against extreme base-pool ratios; reject swaps whose computed dy rounds to zero relative to dx."
+  }
+}

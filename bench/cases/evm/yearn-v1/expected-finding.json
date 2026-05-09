@@ -1,0 +1,17 @@
+{
+  "schema_version": "silica.finding.v0.1",
+  "class": {
+    "taxonomy_id": "DEFI-VAULT-CURVE-VIRTUAL-PRICE-MANIPULATION-001",
+    "label": "Vault strategy routes deposits using Curve get_virtual_price / pool balances under flash-loan skew",
+    "category": "oracle"
+  },
+  "severity": { "level": "critical", "loss_basis": "actual-loss-if-exploited" },
+  "validation": { "highest_applicable": "fork-execution-state-asserted" },
+  "heuristics_cited": [
+    { "heuristic_id": "HEUR-ORACLE-01", "version": "v1", "weight": 0.9 },
+    { "heuristic_id": "HEUR-FLASH-01", "version": "v1", "weight": 0.85 }
+  ],
+  "remediation": {
+    "summary": "Do not use Curve pool balances or get_virtual_price as the routing decision input for vault rebalancing. Snapshot expected exchange rates from a manipulation-resistant oracle (Chainlink, robust TWAP) and revert if observed slippage exceeds a tight bound. Cap the strategy's per-block movement to limit damage from any single flash-loan."
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": "silica.finding.v0.1",
+  "class": {
+    "taxonomy_id": "DEFI-LENDING-EMPTY-MARKET-DONATION-INFLATION-001",
+    "label": "Compound-v2 fork empty cToken market exchange-rate inflation via 1-wei mint plus donation",
+    "category": "lending-liquidation"
+  },
+  "severity": { "level": "critical", "loss_basis": "actual-loss-if-exploited" },
+  "validation": { "highest_applicable": "fork-execution-state-asserted" },
+  "heuristics_cited": [
+    { "heuristic_id": "HEUR-LEND-02", "version": "v1", "weight": 0.9 },
+    { "heuristic_id": "HEUR-ARITH-02", "version": "v1", "weight": 0.7 }
+  ],
+  "remediation": {
+    "summary": "Enforce a non-trivial initial-seed-deposit (held by the protocol or burned) for every newly listed cToken market before borrowing is enabled. Either bake the seed requirement into market-listing, or use OpenZeppelin's ERC4626-style virtual-shares offset to make donation inflation infeasible."
+  }
+}

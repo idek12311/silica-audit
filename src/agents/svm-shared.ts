@@ -4,8 +4,8 @@
  * Each SVM specialist agent handles one of the 7 bug classes from
  * multi-vm-svm-sketch.md:55-100.
  */
-import type { LlmGateway, GatewayRequest, GatewayResponse } from '../llm/anthropic-gateway.js';
-import type { TrustTier } from '../llm/anthropic-gateway.js';
+import type { LlmGateway, GatewayRequest, GatewayResponse } from '../llm/types.js';
+import type { TrustTier } from '../llm/types.js';
 import type { Finding } from '../finding/schema.js';
 import { FindingSchema } from '../finding/schema.js';
 import { ulid } from 'ulid';
@@ -107,7 +107,7 @@ function parseFindings(
   content: string,
   auditId: string,
   tenantId: string,
-  bugClass: SvmBugClass,
+  _bugClass: SvmBugClass,
 ): Finding[] {
   try {
     const stripped = content.replace(/^```(?:json)?\n?/m, '').replace(/\n?```$/m, '').trim();

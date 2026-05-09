@@ -1,0 +1,20 @@
+{
+  "case_id": "saddle-finance-april-2022",
+  "protocol": "Saddle Finance",
+  "chain_id": 1,
+  "block": 14684300,
+  "exploit_tx": "0x2b023d65485c4bb68d781960c2196588d03b871dc9eb1c054f596b7ca6f7da56",
+  "vulnerable_contract": "0x824dcD7b044D60df2e89B1bB888e66D8BCf41491",
+  "vulnerable_function": "swapUnderlying(uint8,uint8,uint256,uint256,uint256)",
+  "loss_usd": 10000000,
+  "currency": "sUSD/USDC/USDT/DAI",
+  "difficulty": "hard",
+  "tx_type": "single-tx",
+  "bug_class": "rounding-truncation",
+  "description": "Saddle's StableSwap metapool swapUnderlying performed virtual-price arithmetic that integer-divided amounts to zero under tiny inputs at a particular base-pool LP ratio, letting the pool return tokens without paying in. The flaw is below the well-known empty-pool donation pattern — it is in the precision of the StableSwap invariant under skewed reserves. vulnerable_contract is the sUSDv2 MetaSwap pool, confirmed in Saddle's official post-mortem and the Immunefi hack-analysis writeup.",
+  "_provenance": [
+    "https://blog.saddle.finance/4-30-2022-post-mortem-of-mainnet-susdv2-metapool-exploit/",
+    "https://medium.com/immunefi/hack-analysis-saddle-finance-april-2022-f2bcb119f38",
+    "https://rekt.news/saddle-finance-rekt2"
+  ]
+}

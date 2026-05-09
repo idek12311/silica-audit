@@ -1,0 +1,17 @@
+{
+  "schema_version": "silica.finding.v0.1",
+  "class": {
+    "taxonomy_id": "DEFI-ROUTER-MISSING-PAIR-VALIDATION-001",
+    "label": "Router transferFrom recipient is caller-supplied without factory-pair validation (allowance abuse)",
+    "category": "access-control"
+  },
+  "severity": { "level": "high", "loss_basis": "actual-loss-if-exploited" },
+  "validation": { "highest_applicable": "fork-execution-state-asserted" },
+  "heuristics_cited": [
+    { "heuristic_id": "HEUR-AC-01", "version": "v1", "weight": 0.85 },
+    { "heuristic_id": "HEUR-VLOOKUP-01", "version": "v1", "weight": 0.8 }
+  ],
+  "remediation": {
+    "summary": "Validate every pool/pair address used as a transferFrom recipient against the canonical factory's getPool/getPair before pulling tokens. Never trust route data over the factory mapping. Audit all upstream allowances when introducing a new router."
+  }
+}

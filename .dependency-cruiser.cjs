@@ -26,13 +26,14 @@ module.exports = {
     },
     {
       name: "contract-stays-pure",
-      comment: "src/scope/ artifact schemas must not import outside src/scope/",
+      comment:
+        "src/scope/ artifact schemas may only import other scope files or pure-function schema libraries (zod). They must not pull in infrastructure, frameworks, or vendor SDKs.",
       severity: "error",
       from: {
         path: "^src/scope/artifact\\.ts$",
       },
       to: {
-        pathNot: "^src/scope/",
+        pathNot: "^(src/scope/|node_modules/zod/)",
       },
     },
     {

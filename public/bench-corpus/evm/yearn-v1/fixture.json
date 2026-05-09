@@ -1,0 +1,20 @@
+{
+  "case_id": "yearn-v1-february-2021",
+  "protocol": "Yearn yDAI v1 vault",
+  "chain_id": 1,
+  "block": 11792184,
+  "exploit_tx": "0x59faab5a1911618064f1ffa1e4649d85c99cfd9f0d64dcebbc1af7d7630da98b",
+  "vulnerable_contract": "0xACd43E627e64355f1861cEC6d3a6688B31a6F952",
+  "vulnerable_function": "earn() / strategy.deposit",
+  "loss_usd": 11000000,
+  "currency": "DAI",
+  "difficulty": "hard",
+  "tx_type": "multi-tx",
+  "bug_class": "flash-loan-oracle-manip",
+  "description": "Yearn's yDAI v1 strategy moved DAI between Curve and Compound using Curve 3pool balances and get_virtual_price as a routing proxy. Attacker flash-loaned ~$116M DAI, imbalanced the 3pool, triggered the strategy at the unfavorable rate, then rebalanced — pocketing the slippage Yearn realized as strategy losses. The flaw is reading a manipulable AMM exchange rate as truth for routing decisions. The exploit pattern repeated across 11 transactions over 38 minutes; exploit_tx is the run() call from exploiter 0x14EC0c… that the official Yearn security disclosure cites as the initial detected attack tx.",
+  "_provenance": [
+    "https://etherscan.io/tx/0x59faab5a1911618064f1ffa1e4649d85c99cfd9f0d64dcebbc1af7d7630da98b",
+    "https://github.com/yearn/yearn-security/blob/master/disclosures/2021-02-04.md",
+    "https://halborn.com/explained-the-yearn-v1-ydai-hack-feb-2021/"
+  ]
+}

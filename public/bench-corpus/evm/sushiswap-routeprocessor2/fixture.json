@@ -1,0 +1,21 @@
+{
+  "case_id": "sushiswap-routeprocessor2-april-2023",
+  "protocol": "SushiSwap RouteProcessor2",
+  "chain_id": 1,
+  "block": 17007838,
+  "exploit_tx": "0xb8f57cf82b7057d9d03f1500e3f0ce46980388c3b13ff317f1c617d932313386",
+  "vulnerable_contract": "0x044b75f554b886A065b9567891e45c79542d7357",
+  "vulnerable_function": "processRoute(address,uint256,address,uint256,address,bytes)",
+  "loss_usd": 3300000,
+  "currency": "WETH/USDC/various",
+  "difficulty": "medium",
+  "tx_type": "multi-tx",
+  "bug_class": "approve-allowance",
+  "description": "RouteProcessor2.processRoute issues transferFrom(from, pool, amount) where pool is taken from caller-supplied route data without validating it against a UniswapV3Factory pair. Any address that had granted the router an allowance was vulnerable: an attacker could call processRoute with pool = attacker-controlled and pull approved tokens directly. Affected 14 chains; whitehat counter-exploit recovered most funds. The canonical mainnet exploit_tx here is the 100-WETH pull from @0xsifu's approval that the Steve Ng / Hacken / SolidityScan post-mortems all cite as the example transaction.",
+  "_provenance": [
+    "https://etherscan.io/tx/0xb8f57cf82b7057d9d03f1500e3f0ce46980388c3b13ff317f1c617d932313386",
+    "https://etherscan.io/address/0x044b75f554b886a065b9567891e45c79542d7357",
+    "https://steveng.medium.com/sushiswap-routeprocessor2-exploit-aa204469d404",
+    "https://www.sushi.com/blog/routeprocessor2-post-mortem"
+  ]
+}

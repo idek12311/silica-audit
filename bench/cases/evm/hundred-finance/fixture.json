@@ -1,0 +1,20 @@
+{
+  "case_id": "hundred-finance-april-2023",
+  "protocol": "Hundred Finance (Optimism)",
+  "chain_id": 10,
+  "block": 92465500,
+  "exploit_tx": "0x47ebf6ce1c1c0a9c8ccfbe23a8c1c5dc5f4f57c5e8da0d80f7c5f47a90c2d70e",
+  "vulnerable_contract": "0x35594E4992DFefcB0C20EC487d7af22a30bDec60",
+  "vulnerable_function": "redeem(uint256) / mint(uint256)",
+  "loss_usd": 7400000,
+  "currency": "WBTC/USDC/various",
+  "difficulty": "hard",
+  "tx_type": "multi-tx",
+  "bug_class": "rounding-truncation",
+  "description": "Compound-v2 fork with no enforced initial-seed-deposit on listed markets. Attacker minted 1 wei of an empty hToken, donated underlying directly to the market to inflate the exchange rate, borrowed against the inflated collateral, and looped. Compound prod was protected by a guardian-required seed deposit that Hundred's Optimism deployment did not enforce. vulnerable_contract is the empty hWBTC market on Optimism that the attacker manipulated by donating WBTC directly to inflate the exchange rate.",
+  "_provenance": [
+    "https://optimistic.etherscan.io/address/0x35594e4992dfefcb0c20ec487d7af22a30bdec60",
+    "https://blockapex.io/hundred-finance-hack-analysis/",
+    "https://rekt.news/hundred-rekt2"
+  ]
+}

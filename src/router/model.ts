@@ -1,4 +1,4 @@
-import type { TrustTier } from '../llm/anthropic-gateway.js';
+import type { TrustTier } from '../llm/types.js';
 
 /**
  * Model Router — selects the LLM model for a given agent role and trust tier.

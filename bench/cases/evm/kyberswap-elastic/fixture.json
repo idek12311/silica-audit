@@ -1,0 +1,21 @@
+{
+  "case_id": "kyberswap-elastic-november-2023",
+  "protocol": "KyberSwap Elastic",
+  "chain_id": 1,
+  "block": 18630392,
+  "exploit_tx": "0x485e08dc2b6a4b3aeadcb89c3d18a37666dc7d9424961a2091d6b3696792f0f3",
+  "vulnerable_contract": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A",
+  "vulnerable_function": "swap(address,int256,uint160,bytes) / mint",
+  "loss_usd": 48000000,
+  "currency": "various",
+  "difficulty": "very-hard",
+  "tx_type": "multi-tx",
+  "bug_class": "pool-init-arithmetic",
+  "description": "KyberSwap Elastic's reinvestment-curve and tick-update logic reconciled liquidity at the active tick via two separate paths. Under a contrived swap-then-mint ordering near tick boundaries, the two paths desynchronized — the pool credited liquidity on one path that was never decremented on the other, letting the attacker repeatedly extract phantom liquidity. Multi-EVM (Ethereum, Arbitrum, Optimism, Polygon, BSC, Avalanche, Base) affected. The canonical mainnet exploit_tx here is the first of three back-to-back txs from primary exploiter 0x50275E0B… on 2023-11-22 22:55 UTC; vulnerable_contract is the KyberSwap Elastic Factory.",
+  "_provenance": [
+    "https://etherscan.io/tx/0x485e08dc2b6a4b3aeadcb89c3d18a37666dc7d9424961a2091d6b3696792f0f3",
+    "https://etherscan.io/address/0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A",
+    "https://blog.kyberswap.com/post-mortem-kyberswap-elastic-exploit/",
+    "https://www.halborn.com/blog/post/explained-the-kyberswap-hack-november-2023"
+  ]
+}

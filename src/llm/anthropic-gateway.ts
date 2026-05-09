@@ -1,76 +1,34 @@
 import Anthropic from '@anthropic-ai/sdk';
 import type { Message, MessageParam, TextBlock } from '@anthropic-ai/sdk/resources/messages.js';
 
-// ---------------------------------------------------------------------------
-// Trust tier model (notes.md §17.3)
-// ---------------------------------------------------------------------------
+import {
+  GatewayError,
+  type GatewayMessage,
+  type GatewayRequest,
+  type GatewayResponse,
+  type LlmGateway,
+  type ModelConfig,
+  type TrustTier,
+} from './types.js';
 
-export type TrustTier = 'anthropic-no-retention' | 'self-hosted-vllm';
-
-export interface ModelConfig {
-  modelId: string;
-  maxTokens: number;
-  trustTier: TrustTier;
-}
+// Re-export the port types so existing `import { TrustTier, LlmGateway } from
+// '../llm/anthropic-gateway.js'` keeps working. New code should prefer
+// importing types from './types.js' so consumers don't pull in the SDK runtime.
+export {
+  GatewayError,
+  type GatewayMessage,
+  type GatewayRequest,
+  type GatewayResponse,
+  type LlmGateway,
+  type ModelConfig,
+  type TrustTier,
+};
 
 /** Default model mapping per trust tier */
 const DEFAULT_MODELS: Record<TrustTier, string> = {
   'anthropic-no-retention': 'claude-sonnet-4-6',
   'self-hosted-vllm': process.env['VLLM_DEFAULT_MODEL'] ?? 'meta-llama/Llama-4-Scout-17B-16E-Instruct',
 };
-
-// ---------------------------------------------------------------------------
-// Prompt message and caching types
-// ---------------------------------------------------------------------------
-
-export interface GatewayMessage {
-  role: 'user' | 'assistant';
-  content: string;
-}
-
-export interface GatewayRequest {
-  trustTier: TrustTier;
-  systemPrompt?: string;
-  messages: GatewayMessage[];
-  maxTokens?: number;
-  /** If true, the system prompt is eligible for Anthropic prompt caching */
-  cacheSystemPrompt?: boolean;
-  /** Metadata for observability */
-  agentRole?: string;
-}
-
-export interface GatewayResponse {
-  content: string;
-  inputTokens: number;
-  outputTokens: number;
-  cacheWriteInputTokens: number;
-  cacheReadInputTokens: number;
-  model: string;
-  trustTierUsed: TrustTier;
-  stopReason: string;
-}
-
-// ---------------------------------------------------------------------------
-// Gateway errors
-// ---------------------------------------------------------------------------
-
-export class GatewayError extends Error {
-  override readonly cause?: unknown;
-
-  constructor(message: string, cause?: unknown) {
-    super(message);
-    this.name = 'GatewayError';
-    this.cause = cause;
-  }
-}
-
-// ---------------------------------------------------------------------------
-// LLM Gateway client interface (port — owned by the application layer)
-// ---------------------------------------------------------------------------
-
-export interface LlmGateway {
-  complete(request: GatewayRequest): Promise<GatewayResponse>;
-}
 
 // ---------------------------------------------------------------------------
 // Anthropic SDK implementation

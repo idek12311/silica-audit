@@ -1,0 +1,20 @@
+{
+  "case_id": "inverse-finance-april-2022",
+  "protocol": "Inverse Finance (Anchor money market)",
+  "chain_id": 1,
+  "block": 14506350,
+  "exploit_tx": "0x600373f67521324c8068cfd025f121a0843d57ec813411661b07edc5ff781842",
+  "vulnerable_contract": "0x39b1dF026010b5aEA781f90542EE19E900F2Db15",
+  "vulnerable_function": "getUnderlyingPrice(address)",
+  "loss_usd": 15600000,
+  "currency": "INV/DOLA",
+  "difficulty": "medium",
+  "tx_type": "multi-tx",
+  "bug_class": "flash-loan-oracle-manip",
+  "description": "Inverse priced INV collateral via a Keep3r v2 TWAP that read SushiSwap reserves on a thin INV-ETH pool. Attacker swapped a large amount into the pool, called update() on the Keep3r oracle (permissionless) to lock the inflated price for ~30 minutes, deposited a small INV position at the inflated valuation, borrowed everything available against it, and let the position liquidate. TWAP-on-thin-pool is a known anti-pattern. vulnerable_contract is the Keep3rV2Oracle deployed by Inverse Finance for the SushiSwap INV-WETH pair (0x328dFd…F821).",
+  "_provenance": [
+    "https://etherscan.io/address/0x39b1df026010b5aea781f90542ee19e900f2db15",
+    "https://inspexco.medium.com/inverse-finances-incident-analysis-inv-price-manipulation-b15c2e917888",
+    "https://rekt.news/inverse-finance-rekt"
+  ]
+}
