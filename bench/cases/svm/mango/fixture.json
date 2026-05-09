@@ -4,7 +4,7 @@
   "vm": "svm",
   "cluster": "mainnet-beta",
   "slot": 153474100,
-  "program_id": "[verify-mango-v3-program-id]",
+  "program_id": "mv3ekLzLbnVPNxjSKvqBpU3ZeZXPQdEC3bp5MDEBG68",
   "loss_usd": 117000000,
   "currency": "MNGO/USDC",
   "difficulty": "hard",

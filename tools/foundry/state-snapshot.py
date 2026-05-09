@@ -6,7 +6,6 @@ Used to populate Finding.evidence[].kind = 'state-assertion'.
 """
 from __future__ import annotations
 
-import json
 import logging
 from dataclasses import dataclass
 from typing import Any

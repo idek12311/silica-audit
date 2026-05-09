@@ -22,6 +22,7 @@ class TestParseMochaOutput:
         stdout = "  1) test should prove exploit\n     AssertionError"
         passed, failed = _parse_mocha_output(stdout)
         assert "test should prove exploit" in failed
+        assert passed == []
 
     def test_mixed_results(self):
         stdout = "  ✓ setup works\n  1) exploit fails\n  1 passing, 1 failing"

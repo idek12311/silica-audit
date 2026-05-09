@@ -4,7 +4,7 @@
   "vm": "svm",
   "cluster": "mainnet-beta",
   "slot": 148000000,
-  "program_id": "[verify-optifi-program-id]",
+  "program_id": "optFiKjQpoQ3PvacwnFWaPUAqXCETMJSz2sz8HwPe9B",
   "loss_usd": 661000,
   "currency": "USDC",
   "difficulty": "easy",

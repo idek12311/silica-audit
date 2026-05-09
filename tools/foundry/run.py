@@ -68,8 +68,6 @@ def run_forge_test(
         raise FoundryRunnerError(f"Test path does not exist: {test_path}")
 
     with tempfile.TemporaryDirectory() as output_dir:
-        result_file = Path(output_dir) / "forge-result.json"
-
         cmd = _build_docker_cmd(test_path, str(output_dir), rpc_url, fork_block, match_test)
         logger.info("Running forge test: fork_block=%d", fork_block)
 

@@ -4,7 +4,7 @@
   "chain_id": 1,
   "block": 14602790,
   "exploit_tx": "0xcd314668aaa9fbc4ff0f2764d8d76a6b21f5f559c2c90e6a87fa66f4c91b5c9d",
-  "vulnerable_contract": "[verify-beanstalk-diamond-address]",
+  "vulnerable_contract": "0xC1E088fC1323b20BCBee9bd1B9fC9546db5624C5",
   "vulnerable_function": "emergencyCommit(uint32)",
   "loss_usd": 182000000,
   "currency": "BEAN/stablecoins",

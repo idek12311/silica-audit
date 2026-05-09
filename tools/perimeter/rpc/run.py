@@ -13,10 +13,8 @@ REQUIRES scope_artifact_id — fail-closed without it.
 """
 from __future__ import annotations
 
-import json
 import logging
 import os
-import subprocess
 from dataclasses import dataclass, field
 from typing import Any
 

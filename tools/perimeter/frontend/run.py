@@ -20,9 +20,7 @@ import logging
 import os
 import re
 import subprocess
-import tempfile
 from dataclasses import dataclass, field
-from pathlib import Path
 from typing import Any
 
 logger = logging.getLogger(__name__)
@@ -102,7 +100,11 @@ def _run_mock_analysis(bundle_url: str, scope_artifact_id: str) -> FrontendTaint
             "source": "external-api-response",
             "sink": "approve(spender, amount)",
             "call_site": "app.tsx:142",
-            "description": "spender parameter derived from /api/vault-info response without integrity verification",
+            "bundle_url": bundle_url,
+            "description": (
+                f"At {bundle_url}: spender parameter derived from "
+                "/api/vault-info response without integrity verification"
+            ),
             "severity": "critical",
             "rung": "static-signal-only",
         }

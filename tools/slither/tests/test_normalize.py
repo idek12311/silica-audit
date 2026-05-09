@@ -10,8 +10,6 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 from normalize import (  # type: ignore[import]
     normalize_slither_finding,
     normalize_batch,
-    IMPACT_TO_SEVERITY,
-    CONFIDENCE_TO_PRIOR,
 )
 
 EULER_ADDRESS = "0x27182842e098f60e3d576794a5bffb0777e025d3"

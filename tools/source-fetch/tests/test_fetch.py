@@ -4,7 +4,6 @@ Unit tests for the source-fetch tool.
 Integration test (P4.test — Euler block 16817993) lives at
 tests/integration/tools/test_source_fetch_euler.py.
 """
-import importlib
 import json
 from unittest.mock import MagicMock, patch
 
@@ -18,8 +17,7 @@ _FETCH_DIR = os.path.join(os.path.dirname(__file__), '..')
 if _FETCH_DIR not in sys.path:
     sys.path.insert(0, _FETCH_DIR)
 
-import fetch  # type: ignore[import]  # noqa: E402
-from fetch import (  # type: ignore[import]
+from fetch import (  # type: ignore[import]  # noqa: E402
     fetch_source,
     SourceFetchError,
     _fetch_from_etherscan,
@@ -122,7 +120,8 @@ class TestFetchSource:
         etherscan_resp.raise_for_status = MagicMock()
 
         call_count = 0
-        def mock_get(url, **kwargs):
+        def mock_get(url, **_kwargs):
+            del _kwargs  # accept any kwargs the real requests.get takes; ignore them
             nonlocal call_count
             call_count += 1
             if "sourcify.dev" in url:

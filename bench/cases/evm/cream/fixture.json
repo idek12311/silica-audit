@@ -4,7 +4,7 @@
   "chain_id": 1,
   "block": 13312000,
   "exploit_tx": "0xa9a1b8ea288eb9ad315088f17f7c7386b9989c95b4d13c81b69d5ddad7ffe61e",
-  "vulnerable_contract": "[verify-cAMP-contract-address]",
+  "vulnerable_contract": "0x2db6c82ce72c8d7d770ba1b5f5ed0b6e075066d6",
   "vulnerable_function": "borrow(uint256)",
   "loss_usd": 18800000,
   "currency": "AMP/ETH",

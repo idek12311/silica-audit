@@ -8,11 +8,9 @@ Per multi-vm-svm-sketch.md:114-122: Fork environment + PoC framework.
 """
 from __future__ import annotations
 
-import json
 import logging
 import os
 import subprocess
-import tempfile
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -102,6 +100,10 @@ def _build_docker_cmd(
         anchor_cmd.append(f"--provider.cluster {rpc_url}")
     if match_test:
         anchor_cmd.append(f"--grep '{match_test}'")
+    if clone_accounts:
+        # solana-test-validator --clone <pubkey> per multi-vm-svm-sketch.md:114
+        for pubkey in clone_accounts:
+            anchor_cmd.append(f"--validator-args '--clone {pubkey}'")
     cmd.append(" ".join(anchor_cmd))
     return cmd
 
